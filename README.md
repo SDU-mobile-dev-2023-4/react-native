@@ -37,6 +37,18 @@ Please note, that being on the same network is crucial if you want to use a phon
 
 The Expo application will display a url and a QR code, that can be scanned, to access the compiled version.
 
+## Structure
+
+The application is structured as follows in regards to folders:
+
+- `assets` - contains all assets, such as images, fonts, etc.
+- `src` - contains all source code
+  - `components` - contains all components
+    - `atoms` - contains all atoms - Most Generic UI elements Completely reusable components
+    - `molecules` - contains all molecules - Specific components built with atoms
+  - `screens` - contains all screens - High level pages/screens/components/, not intended for reusability
+  - `utils` - contains all utilities, such as API calls, etc.
+
 ## Technology
 
 The following tech stack is used:
