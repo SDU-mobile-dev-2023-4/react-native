@@ -11,6 +11,8 @@ export type Car = {
     location: Location,
     brand: Brand,
     weight: number,
+
+    /** The time it takes the car to go from 0-100km/h */
     acceleration: number,
     wheelCount: number,
     description: String,
