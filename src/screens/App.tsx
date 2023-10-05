@@ -14,12 +14,17 @@ stack.Navigator.defaultProps = {
     headerShown: false
   }
 }
+stack.Navigator.defaultProps = {
+  screenOptions: {
+    headerShown: false
+  }
+}
 export default function App() {
   return (
     <CarsProvider>
       <LocationsProvider>
         <NavigationContainer >
-          <stack.Navigator initialRouteName="CarBrowser">
+          <stack.Navigator initialRouteName="Home">
             <stack.Screen name="Home" component={Home}/>
             <stack.Screen name="CarBrowser" component={CarBrowser} />
           </stack.Navigator>
