@@ -19,7 +19,7 @@ export default function App() {
     <CarsProvider>
       <LocationsProvider>
         <NavigationContainer >
-          <stack.Navigator initialRouteName="CarBrowser">
+          <stack.Navigator initialRouteName="Home">
             <stack.Screen name="Home" component={Home}/>
             <stack.Screen name="CarBrowser" component={CarBrowser} />
           </stack.Navigator>
