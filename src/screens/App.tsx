@@ -9,39 +9,23 @@ import { useContext } from 'react';
 import { Text, View } from 'react-native';
 
 const stack = createNativeStackNavigator();
-
 stack.Navigator.defaultProps = {
   screenOptions: {
-    headerShown: false,
-  },
-};
-
+    headerShown: false
+  }
+}
 export default function App() {
   return (
     <CarsProvider>
       <LocationsProvider>
-        <Navigation />
+        <NavigationContainer >
+          <stack.Navigator initialRouteName="Home">
+            <stack.Screen name="Home" component={Home}/>
+            <stack.Screen name="CarBrowser" component={CarBrowser} />
+          </stack.Navigator>
+        </NavigationContainer>
       </LocationsProvider>
     </CarsProvider>
   );
 }
 
-function Navigation() {
-
-  const carsContext = useContext(CarsContext);
-
-  if (carsContext.state.loading) {
-    return (
-      <Loading />
-    )
-  }
-
-  return (
-    <NavigationContainer>
-      <stack.Navigator initialRouteName="Home">
-        <stack.Screen name="Home" component={Home} />
-        <stack.Screen name="CarBrowser" component={CarBrowser} />
-      </stack.Navigator>
-    </NavigationContainer>
-  );
-}
