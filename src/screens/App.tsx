@@ -9,14 +9,18 @@ import Home from './Home';
 import { CarBrowser } from './CarBrowser';
 
 const stack = createNativeStackNavigator();
-
+stack.Navigator.defaultProps = {
+  screenOptions: {
+    headerShown: false
+  }
+}
 export default function App() {
   return (
     <CarsProvider>
       <LocationsProvider>
-        <NavigationContainer>
+        <NavigationContainer >
           <stack.Navigator initialRouteName="Home">
-            <stack.Screen name="Home" component={Home} />
+            <stack.Screen name="Home" component={Home}/>
             <stack.Screen name="CarBrowser" component={CarBrowser} />
           </stack.Navigator>
         </NavigationContainer>
