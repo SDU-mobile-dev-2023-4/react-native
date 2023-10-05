@@ -1,13 +1,16 @@
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, View } from 'react-native';
 import { Text } from '../components/atoms/Text';
+import { CarsProvider } from '../components/molecules/CarsContext';
 
 export default function App() {
   return (
-    <View style={styles.container}>
-      <Text>Hello world!</Text>
-      <StatusBar style="auto" />
-    </View>
+    <CarsProvider>
+      <View style={styles.container}>
+        <Text>Hello world!</Text>
+        <StatusBar style="auto" />
+      </View>
+    </CarsProvider>
   );
 }
 
