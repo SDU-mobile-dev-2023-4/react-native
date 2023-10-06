@@ -13,7 +13,16 @@ export default function Home({ navigation }: { navigation: any }) {
       
       if (!fontsLoaded) {
         // You can return a loading screen or a placeholder here until the font is loaded
-        return <View><Text>Loading...</Text></View>;
+        return <View>
+            <LinearGradient
+                // Background Linear Gradient
+                colors={['rgb(121, 12, 172)', 'rgb(255,218,185)']}
+                style={styles.background}
+                start={{ x: 0.6, y: 0.25 }}
+                end={{ x: 1, y: 1 }}
+            />
+            <Text>Loading...</Text>
+            </View>;
       }
     return (
         <View style={styles.body}>
