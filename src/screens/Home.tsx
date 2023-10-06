@@ -57,13 +57,6 @@ const styles = StyleSheet.create({
         justifyContent: 'space-between',
         height: '45%',
     },
-    background: {
-        position: 'absolute',
-        left: 0,
-        right: 0,
-        top: 0,
-        height: '100%',
-    },
     button: {
         backgroundColor: '#EA4646',
         borderRadius: 20,
