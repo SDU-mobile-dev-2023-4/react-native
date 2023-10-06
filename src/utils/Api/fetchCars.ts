@@ -15,10 +15,7 @@ export default async function fetchCars(state: CarsState, setState: React.Dispat
     if (!response.ok) {
         setState({
             cars: [],
-            error: {
-                errored: true,
-                message: `Error: ${response.status} - ${response.statusText}`,
-            },
+            error: `Error: ${response.status} - ${response.statusText}`,
             loading: false,
         });
         return;
@@ -29,10 +26,7 @@ export default async function fetchCars(state: CarsState, setState: React.Dispat
     if (!contentType || !contentType.includes("application/json")) {
         setState({
             cars: [],
-            error: {
-                errored: true,
-                message: `Error: Invalid content type: ${contentType}`,
-            },
+            error: `Error: Invalid content type: ${contentType}`,
             loading: false,
         });
         return;
@@ -48,10 +42,7 @@ export default async function fetchCars(state: CarsState, setState: React.Dispat
     if (!parsedCars.success) {
         setState({
             cars: [],
-            error: {
-                errored: true,
-                message: `Error: Invalid response body: ${parsedCars.error.message}`,
-            },
+            error: `Error: Invalid response body: ${parsedCars.error.message}`,
             loading: false,
         });
         return;
@@ -60,10 +51,7 @@ export default async function fetchCars(state: CarsState, setState: React.Dispat
     // Set state with parsed cars
     setState({
         cars: parsedCars.data,
-        error: {
-            errored: false,
-            message: "",
-        },
+        error: false,
         loading: false,
     });
 }

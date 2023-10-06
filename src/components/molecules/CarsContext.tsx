@@ -4,10 +4,7 @@ import fetchCars from "../../utils/Api/fetchCars";
 
 export interface CarsState {
     cars: Car[];
-    error: {
-        errored: boolean;
-        message: string;
-    }
+    error: false | string;
     loading: boolean;
 }
 
@@ -19,10 +16,7 @@ export interface CarsContextType {
 export const CarsContext = React.createContext<CarsContextType>({
     state: {
         cars: [],
-        error: {
-            errored: false,
-            message: "",
-        },
+        error: false,
         loading: true,
     },
     setState: () => { },
@@ -35,10 +29,7 @@ interface CarsProviderProps {
 export const CarsProvider = ({ children }: CarsProviderProps) => {
     const [state, setState] = React.useState<CarsState>({
         cars: [],
-        error: {
-            errored: false,
-            message: "",
-        },
+        error: false,
         loading: true,
     });
 
