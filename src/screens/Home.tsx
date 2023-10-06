@@ -14,9 +14,9 @@ export default function Home({ navigation }: { navigation: any }) {
       
       if (!fontsLoaded) {
         // You can return a loading screen or a placeholder here until the font is loaded
-        return <View>
+        return <View style={styles.body}>
             <DefaultGradient />
-            <Text>Loading...</Text>
+            <Text style={styles.buttontext}>Loading...</Text>
             </View>;
       }
     return (
