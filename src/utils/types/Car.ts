@@ -11,6 +11,7 @@ export type Car = z.infer<typeof CarSchema>;
  * Zod schema for a Car
  */
 export const CarSchema = z.object({
+    id: z.number(),
     engine: EngineSchema,
     name: z.string(),
     pictures: z.array(PictureSchema),
@@ -27,4 +28,6 @@ export const CarSchema = z.object({
     doorCount: z.number(),
     manufacturingYear: z.number(),
     topSpeed: z.number(),
+    created_at: z.coerce.date(),
+    updated_at: z.coerce.date(),
 });

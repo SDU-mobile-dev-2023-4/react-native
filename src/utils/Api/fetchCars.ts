@@ -45,6 +45,7 @@ export default async function fetchCars(state: CarsState, setState: React.Dispat
             error: `Error: Invalid response body: ${parsedCars.error.message}`,
             loading: false,
         });
+        console.error(parsedCars.error);
         return;
     }
     
