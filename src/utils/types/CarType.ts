@@ -17,4 +17,4 @@ export enum CarType {
 /**
  * Zod schema for a CarType
  */
-export const CarTypeScheme = z.nativeEnum(CarType);
+export const CarTypeSchema = z.nativeEnum(CarType);

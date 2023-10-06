@@ -1,28 +1,28 @@
 import z from "zod";
-import { EngineScheme } from "./Engine";
-import { PictureScheme } from "./Picture";
-import { LocationScheme } from "./Location";
-import { BrandScheme } from "./Brand";
-import { CarTypeScheme } from "./CarType";
+import { EngineSchema } from "./Engine";
+import { PictureSchema } from "./Picture";
+import { LocationSchema } from "./Location";
+import { BrandSchema } from "./Brand";
+import { CarTypeSchema } from "./CarType";
 
-export type Car = z.infer<typeof CarScheme>;
+export type Car = z.infer<typeof CarSchema>;
 
 /**
  * Zod schema for a Car
  */
-export const CarScheme = z.object({
-    engine: EngineScheme,
+export const CarSchema = z.object({
+    engine: EngineSchema,
     name: z.string(),
-    pictures: z.array(PictureScheme),
-    location: LocationScheme,
-    brand: BrandScheme,
+    pictures: z.array(PictureSchema),
+    location: LocationSchema,
+    brand: BrandSchema,
     weight: z.number(),
 
     /** The time it takes the car to go from 0-100km/h */
     acceleration: z.number(),
     wheelCount: z.number(),
     description: z.string(),
-    type: CarTypeScheme,
+    type: CarTypeSchema,
     price: z.number(),
     doorCount: z.number(),
     manufacturingYear: z.number(),

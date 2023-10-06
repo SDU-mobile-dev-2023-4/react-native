@@ -15,6 +15,6 @@ export type Brand = {
 /**
  * Zod schema for a Brand
  */
-export const BrandScheme = z.object({
+export const BrandSchema = z.object({
     name: z.string(),
 });

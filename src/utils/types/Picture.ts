@@ -7,12 +7,12 @@ import { z } from "zod";
  *   alt: "A sweet little kitten."
  * }
  */
-export type Picture = z.infer<typeof PictureScheme>;
+export type Picture = z.infer<typeof PictureSchema>;
 
 /**
  * Zod schema for a Picture
  */
-export const PictureScheme = z.object({
+export const PictureSchema = z.object({
     /** A url to an external hosted image */
     srcUrl: z.string().url(),
     /** An alternate text, which describes the picture */

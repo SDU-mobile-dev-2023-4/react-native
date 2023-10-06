@@ -1,11 +1,11 @@
 import z from "zod";
 
-export type Customer = z.infer<typeof CustomerScheme>;
+export type Customer = z.infer<typeof CustomerSchema>;
 
 /**
  * Zod schema for a Customer
  */
-export const CustomerScheme = z.object({
+export const CustomerSchema = z.object({
     name: z.string(),
     email: z.string(),
     password: z.string(),
