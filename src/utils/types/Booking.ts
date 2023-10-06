@@ -14,10 +14,10 @@ export type Booking = z.infer<typeof BookingSchema>;
 export const BookingSchema = z.object({
     /** Which car the customer has ordered */
     car: CarSchema,
-    startTime: z.date(),
+    startTime: z.coerce.date(),
     /** Location from where the car will be picked up */
     startLocation: LocationSchema,
-    endTime: z.date(),
+    endTime: z.coerce.date(),
     /** Location to where the car will be delivered */
     endLocation: LocationSchema,
     price: z.number(),
