@@ -1,3 +1,5 @@
+import { z } from "zod";
+
 /**
  * @Example
  * {
@@ -5,9 +7,14 @@
  *   alt: "A sweet little kitten."
  * }
  */
-export type Picture = {
+export type Picture = z.infer<typeof PictureSchema>;
+
+/**
+ * Zod schema for a Picture
+ */
+export const PictureSchema = z.object({
     /** A url to an external hosted image */
-    srcUrl: String,
+    srcUrl: z.string().url(),
     /** An alternate text, which describes the picture */
-    alt: String,
-}
+    alt: z.string(),
+});

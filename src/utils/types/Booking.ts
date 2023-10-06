@@ -1,19 +1,25 @@
-import { Car } from "./Car";
-import { Customer } from "./Customer";
-import { Location } from "./Location";
+import z from "zod";
+import { Car, CarSchema } from "./Car";
+import { Customer, CustomerSchema } from "./Customer";
+import { Location, LocationSchema } from "./Location";
 
 /**
  * Type representing a booking ticket.
  */
-export type Booking = {
+export type Booking = z.infer<typeof BookingSchema>;
+
+/**
+ * Zod schema for a Booking
+ */
+export const BookingSchema = z.object({
     /** Which car the customer has ordered */
-    car: Car,
-    startTime: Date,
+    car: CarSchema,
+    startTime: z.coerce.date(),
     /** Location from where the car will be picked up */
-    startLocation: Location,
-    endTime: Date,
+    startLocation: LocationSchema,
+    endTime: z.coerce.date(),
     /** Location to where the car will be delivered */
-    endLocation: Location,
-    price: number,
-    customer: Customer,
-}
+    endLocation: LocationSchema,
+    price: z.number(),
+    customer: CustomerSchema,
+});

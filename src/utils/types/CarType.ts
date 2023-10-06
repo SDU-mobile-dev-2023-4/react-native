@@ -1,3 +1,5 @@
+import z from "zod";
+
 /**
  * The Type of car.
  *
@@ -11,3 +13,8 @@ export enum CarType {
     Truck = "Truck",
     Compact = "Compact",
 }
+
+/**
+ * Zod schema for a CarType
+ */
+export const CarTypeSchema = z.nativeEnum(CarType);
