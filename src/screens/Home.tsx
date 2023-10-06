@@ -3,6 +3,7 @@ import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, View, Button, Pressable, Text, Image } from 'react-native';
 import { LinearGradient } from "expo-linear-gradient";
 import { useFonts, Inter_500Medium, Inter_600SemiBold, Inter_700Bold } from '@expo-google-fonts/inter';
+import { DefaultGradient } from "../components/molecules/DefaultGradient";
 
 export default function Home({ navigation }: { navigation: any }) {
     const [fontsLoaded] = useFonts({
@@ -14,25 +15,13 @@ export default function Home({ navigation }: { navigation: any }) {
       if (!fontsLoaded) {
         // You can return a loading screen or a placeholder here until the font is loaded
         return <View>
-            <LinearGradient
-                // Background Linear Gradient
-                colors={['rgb(121, 12, 172)', 'rgb(255,218,185)']}
-                style={styles.background}
-                start={{ x: 0.6, y: 0.25 }}
-                end={{ x: 1, y: 1 }}
-            />
+            <DefaultGradient />
             <Text>Loading...</Text>
             </View>;
       }
     return (
         <View style={styles.body}>
-            <LinearGradient
-                // Background Linear Gradient
-                colors={['rgb(121, 12, 172)', 'rgb(35, 163, 181)']}
-                style={styles.background}
-                start={{ x: 0.6, y: 0.25 }}
-                end={{ x: 1, y: 1 }}
-            />
+            <DefaultGradient />
             <View style={styles.container}>
             <Text style={styles.text}>Car Rental App</Text>
             <Pressable style={styles.cityselect}>
