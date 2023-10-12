@@ -1,12 +1,11 @@
 import { CarsContext, CarsProvider } from '../components/molecules/CarsContext';
-import { LocationsProvider } from '../components/molecules/LocationContext';
+import { LocationsContext, LocationsProvider } from '../components/molecules/LocationContext';
 import Loading from './Loading';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import Home from './Home';
 import { CarBrowser } from './CarBrowser';
 import { useContext } from 'react';
-import { Text, View } from 'react-native';
 
 const stack = createNativeStackNavigator();
 stack.Navigator.defaultProps = {
@@ -34,3 +33,25 @@ export default function App() {
   );
 }
 
+function Navigation() {
+
+  const carsContext = useContext(CarsContext);
+  const locationsContext = useContext(LocationsContext);
+
+  if (carsContext.state.loading || locationsContext.state.loading) {
+    return (
+      <Loading />
+    )
+  }
+
+  console.debug("App Loaded", carsContext, locationsContext);
+
+  return (
+    <NavigationContainer>
+      <stack.Navigator initialRouteName="Home">
+        <stack.Screen name="Home" component={Home} />
+        <stack.Screen name="CarBrowser" component={CarBrowser} />
+      </stack.Navigator>
+    </NavigationContainer>
+  );
+}
