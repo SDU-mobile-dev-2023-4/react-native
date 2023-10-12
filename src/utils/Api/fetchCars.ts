@@ -1,6 +1,7 @@
 import { CarsState } from "../../components/molecules/CarsContext";
 import z from "zod";
 import { CarSchema } from "../types/Car";
+import { getData, storeData } from "./asyncStorage";
 
 /**
  * Fetches cars from the server and sets the state accordingly.
@@ -37,7 +38,6 @@ export default async function fetchCars(state: CarsState, setState: React.Dispat
 
     // Validate response body
     const parsedCars = z.array(CarSchema).safeParse(cars);
-
     // Validate parsing success
     if (!parsedCars.success) {
         setState({
@@ -48,7 +48,17 @@ export default async function fetchCars(state: CarsState, setState: React.Dispat
         console.error(parsedCars.error);
         return;
     }
-    
+
+    console.log("Parsed cars", parsedCars.data);
+
+    await storeData("cars", parsedCars.data);
+
+    setTimeout(() => {
+        getData("cars").then((data) => {
+            console.log(data);
+        });
+    }, 100);
+
     // Set state with parsed cars
     setState({
         cars: parsedCars.data,
