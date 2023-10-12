@@ -13,7 +13,7 @@ export type Picture = z.infer<typeof PictureSchema>;
  * Zod schema for a Picture
  */
 export const PictureSchema = z.object({
-    id: z.number(),
+    id: z.number().nonnegative(),
     /** A url to an external hosted image */
     srcUrl: z.string().url(),
     /** An alternate text, which describes the picture */

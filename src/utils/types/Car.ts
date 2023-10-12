@@ -11,7 +11,7 @@ export type Car = z.infer<typeof CarSchema>;
  * Zod schema for a Car
  */
 export const CarSchema = z.object({
-    id: z.number(),
+    id: z.number().nonnegative(),
     engine: EngineSchema,
     name: z.string(),
     pictures: z.array(PictureSchema),
