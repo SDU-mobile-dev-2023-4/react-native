@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import { Car } from "../../utils/types/Car";
 import fetchCars from "../../utils/Api/fetchCars";
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 /**
  * CarsState
@@ -63,8 +64,11 @@ export const CarsProvider = ({ children }: CarsProviderProps) => {
     });
 
     useEffect(() => {
+        console.log("CarsProvider: useEffect")
         fetchCars(state, setState);
     }, []);
+
+    console.log(state);
 
     return (
         <CarsContext.Provider value={{ state: state, setState }}>
