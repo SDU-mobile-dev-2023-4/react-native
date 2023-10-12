@@ -1,19 +1,14 @@
 import React from "react";
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, View, Button, Text } from 'react-native';
-import { LinearGradient } from "expo-linear-gradient";
-
+import { CardCard } from "../components/molecules/CarCard";
+import { View, StyleSheet } from "react-native";
 
 export function CarBrowser({ navigation }: { navigation: any }) {
   return (
     <View style={styles.container}>
-      <LinearGradient
-        // Background Linear Gradient
-        colors={['rgb(121, 12, 172)', 'rgb(35, 163, 181)']}
-        style={styles.background}
-        start={{ x: 0, y: 0 }}
-        end={{ x: 1, y: 1 }}
-      />
+      <DefaultGradient />
+      <CardCard></CardCard>
+      <StatusBar style="auto" />
     </View>
   );
 }
