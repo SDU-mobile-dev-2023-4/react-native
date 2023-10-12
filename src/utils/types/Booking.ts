@@ -12,7 +12,7 @@ export type Booking = z.infer<typeof BookingSchema>;
  * Zod schema for a Booking
  */
 export const BookingSchema = z.object({
-    id: z.number(),
+    id: z.number().nonnegative(),
     /** Which car the customer has ordered */
     car: CarSchema,
     startTime: z.coerce.date(),

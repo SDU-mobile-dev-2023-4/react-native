@@ -16,7 +16,7 @@ export type Brand = {
  * Zod schema for a Brand
  */
 export const BrandSchema = z.object({
-    id: z.number(),
+    id: z.number().nonnegative(),
     name: z.string(),
     created_at: z.coerce.date(),
     updated_at: z.coerce.date(),

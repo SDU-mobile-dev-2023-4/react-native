@@ -9,7 +9,7 @@ export type Engine = z.infer<typeof EngineSchema>;
  * Zod schema for an Engine
  */
 export const EngineSchema = z.object({
-    id: z.number(),
+    id: z.number().nonnegative(),
     /** The amount of horse power the engine has */
     horsePower: z.number(),
     /** The amount of cylinders the engine has */
