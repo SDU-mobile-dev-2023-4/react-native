@@ -1,31 +1,53 @@
 import React from "react";
 import { StatusBar } from 'expo-status-bar';
 import { CarCard } from "../components/molecules/CarCard";
-import { View, StyleSheet, Text, TouchableOpacity } from "react-native";
+import { View, StyleSheet, Text, TouchableOpacity, ScrollView } from "react-native";
 import { DefaultGradient } from "../components/molecules/DefaultGradient";
+import { Ionicons } from '@expo/vector-icons';
 
 export function CarBrowser({ navigation }: { navigation: any }) {
-  
   return (
     <View style={styles.container}>
       <DefaultGradient />
        {/* Header Section */}
       <View style={styles.header}>
-        <Text style={styles.headerText}>Car Rental</Text>
-        <TouchableOpacity style={styles.filterButton}/>
+        <Text style={styles.headerText}>Car Rental App</Text>
+        <TouchableOpacity style={styles.filterButton}>
+            <Ionicons name="filter" size={24} color="white" /> {/* Filter Icon from vector lib */}
+        </TouchableOpacity>
       </View>
-      <View style={styles.container}>
-        <CarCard 
-      carName="Bentley Continental GT" 
-      carType="COUPE" 
-      imageLocation={require('../../assets/carpic.png')}
-      />
-      <CarCard 
-      carName="Bentley Continental GT" 
-      carType="COUPE" 
-      imageLocation={require('../../assets/carpic.png')}
-      />
-      </View>
+      <ScrollView style={styles.cardGrid} contentContainerStyle={styles.cardGridContent}>
+          <CarCard
+              carName="Bentley Continental GT"
+              carType="COUPE"
+              imageLocation={require('../../assets/carpic.png')}
+          />
+          <CarCard
+              carName="Bentley Continental GT"
+              carType="COUPE"
+              imageLocation={require('../../assets/carpic.png')}
+          />
+          <CarCard
+              carName="Bentley Continental GT"
+              carType="COUPE"
+              imageLocation={require('../../assets/carpic.png')}
+          />
+          <CarCard
+              carName="Bentley Continental GT"
+              carType="COUPE"
+              imageLocation={require('../../assets/carpic.png')}
+          />
+          <CarCard
+              carName="Bentley Continental GT"
+              carType="COUPE"
+              imageLocation={require('../../assets/carpic.png')}
+          />
+          <CarCard
+              carName="Bentley Continental GT"
+              carType="COUPE"
+              imageLocation={require('../../assets/carpic.png')}
+          />
+      </ScrollView>
       <StatusBar style="auto" />
     </View>
   );
@@ -36,9 +58,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     alignItems: 'flex-start',
-    flexDirection: 'row',
-    gap: 60,
-  },
+    },
     background: {
         position: 'absolute',
         left: 0,
@@ -62,12 +82,20 @@ const styles = StyleSheet.create({
         color: '#fff',
     },
     header: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+        padding: 16,
+        backgroundColor: 'transparent',
+        width: '100%',
     },
     headerText: {
-
+        fontSize: 24,
+        fontWeight: 'bold',
+        color: 'white',
     },
     filterButton: {
-
-    }
+        padding: 10,
+    },
     }
 );
