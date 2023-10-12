@@ -1,12 +1,12 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, View, Button } from 'react-native';
-import { Text } from '../components/atoms/Text';
-import { CarsProvider } from '../components/molecules/CarsContext';
+import { CarsContext, CarsProvider } from '../components/molecules/CarsContext';
 import { LocationsProvider } from '../components/molecules/LocationContext';
+import Loading from './Loading';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import Home from './Home';
 import { CarBrowser } from './CarBrowser';
+import { useContext } from 'react';
+import { Text, View } from 'react-native';
 
 const stack = createNativeStackNavigator();
 
@@ -20,14 +20,28 @@ export default function App() {
   return (
     <CarsProvider>
       <LocationsProvider>
-        <NavigationContainer>
-          <stack.Navigator initialRouteName="Home">
-            <stack.Screen name="Home" component={Home} />
-            <stack.Screen name="CarBrowser" component={CarBrowser} />
-          </stack.Navigator>
-        </NavigationContainer>
+        <Navigation />
       </LocationsProvider>
     </CarsProvider>
   );
 }
 
+function Navigation() {
+
+  const carsContext = useContext(CarsContext);
+
+  if (carsContext.state.loading) {
+    return (
+      <Loading />
+    )
+  }
+
+  return (
+    <NavigationContainer>
+      <stack.Navigator initialRouteName="Home">
+        <stack.Screen name="Home" component={Home} />
+        <stack.Screen name="CarBrowser" component={CarBrowser} />
+      </stack.Navigator>
+    </NavigationContainer>
+  );
+}

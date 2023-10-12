@@ -9,8 +9,11 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
  * This holds the cars, the error and the loading state.
  */
 export interface CarsState {
+    /** Cars in the system */
     cars: Car[];
+    /** Error message for state */
     error: false | string;
+    /** Loading state for state */
     loading: boolean;
 }
 
