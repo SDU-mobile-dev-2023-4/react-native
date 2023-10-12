@@ -8,8 +8,11 @@ import fetchCars from "../../utils/Api/fetchCars";
  * This holds the cars, the error and the loading state.
  */
 export interface CarsState {
+    /** Cars in the system */
     cars: Car[];
+    /** Error message for state */
     error: false | string;
+    /** Loading state for state */
     loading: boolean;
 }
 
