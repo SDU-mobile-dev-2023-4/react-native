@@ -39,7 +39,9 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     alignItems: 'flex-start',
-    },
+    flexDirection: 'row',
+    gap: 60,
+  },
     background: {
         position: 'absolute',
         left: 0,
