@@ -1,30 +1,86 @@
 import React from "react";
-import { StyleSheet, View, Text } from "react-native";
+import { StyleSheet, View, Text, Image } from "react-native";
+import { LinearGradient } from 'expo-linear-gradient';
+import { Inter_500Medium, Inter_700Bold, Inter_300Light, useFonts } from "@expo-google-fonts/inter";
 
-export const CardCard = () => {
+
+// Define the CarCard component to accept carName, carType, and imageLocation as props
+type CarCardProps = {
+    carName: string;
+    carType: string;
+    imageLocation: any;
+};
+
+export const CarCard = ({ carName, carType, imageLocation }: CarCardProps) => {
+    const [fontsLoaded] = useFonts({
+        Inter_500Medium,
+        Inter_700Bold,
+        Inter_300Light
+    });
     return (
-        <View style={styles.buttontext}>
-            <Text>Car card!</Text>
+        <View style={styles.imageContainer}>
+            {/* Use the passed imageLocation prop for the Image source */}
+            <Image source={imageLocation} style={styles.image} />
+            <LinearGradient
+                colors={['transparent', 'white', 'white']}
+                locations={[0, 0.3, 1]}
+                style={styles.gradient}
+                start={{ x: 0, y: 0 }}
+                end={{ x: 0, y: 0.5 }}
+            />
+            {/* Use the passed carName and carType props for the Text components */}
+            <Text style={styles.carName}>{carName}</Text>
+            <Text style={styles.carType}>{carType}</Text>
         </View>
     );
 }
 
+
+const imageSizeX = 167;
+const imageSizeY = 167;
+const borderRadius = 15;
 const styles = StyleSheet.create({
-    background: {
-        position: 'absolute',
+    imageContainer: {
+        width: imageSizeX,
+        height: imageSizeY,
+        position: 'relative', // Set the container's position to relative
+        borderRadius: borderRadius,
+    },
+    image: {
+        width: '100%',
+        height: '100%',
+        bottom: '20%',
+        borderRadius: borderRadius,
+    },
+    gradient: {
+        position: 'absolute', // Absolute position for the gradient
         left: 0,
         right: 0,
-        top: 0,
-        height: '100%',
+        bottom: 0,
+        height: '70%', // covers half the image from the bottom up
+        borderRadius: borderRadius,
     },
-    buttontext: {
-        color: '#fff',
-        alignSelf: 'center',
-        fontWeight: '100',
-        textTransform: 'uppercase',
-        fontSize: 32,
-        marginRight: 15,
-        fontFamily: 'Inter_500Medium',
-        backgroundColor: '#fff',
+    carName: {
+        position: 'absolute',    // Absolute position for the text
+        top: '40%',              // Position the text to the middle vertically
+        left: '0%',             // Position the text to the middle horizontally
+        color: 'black',          // Set text color to white
+        zIndex: 1,               // Ensure text is on top
+        textAlign: 'left',       // Center the text horizontally
+        fontFamily: 'Inter_700Bold',
+        fontWeight: 'bold',
+        fontSize: 20,
+    },
+    
+    carType: {
+        position: 'absolute',    // Absolute position for the text
+        bottom: 10,              // Position the text 10 pixels from the bottom
+        left: 0,                 // Start the text from the left edge
+        right: 0,                // Extend the text to the right edge
+        color: 'black',          // Set text color to black
+        zIndex: 2,               // Ensure text is on top
+        textAlign: 'center',     // Center the text horizontally
+        fontFamily: 'Inter_300Light',
+        fontSize: 20,
     },
 });
