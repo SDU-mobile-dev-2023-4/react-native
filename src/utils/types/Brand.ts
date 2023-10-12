@@ -8,16 +8,15 @@ import z from "zod";
  * Mercedes
  * VW
  */
-export type Brand = {
-    name: String,
+export enum Brand {
+    Ferrari = "Ferrari",
+    Mercedes = "Mercedes",
+    Lamborghini = "Lamborghini",
+    Bentley = "Bentley",
+    RollsRoyce = "Rolls Royce"
 }
 
 /**
  * Zod schema for a Brand
  */
-export const BrandSchema = z.object({
-    id: z.number().nonnegative(),
-    name: z.string(),
-    created_at: z.coerce.date(),
-    updated_at: z.coerce.date(),
-});
+export const BrandSchema = z.nativeEnum(Brand);
