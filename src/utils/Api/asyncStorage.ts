@@ -19,7 +19,7 @@ const StorageDataSchema = z.object({
  * 
  * @param key Key of the state
  * @param value The value of the state to be saved. Must be an object
- * @param time Time in milliseconds before the state expires. Default is minutes
+ * @param time Time in minutes before the state expires. Default is 10 minutes
  */
 export const storeData = async (key: string, value: unknown, time: number = 10): Promise<void> => {
     try {

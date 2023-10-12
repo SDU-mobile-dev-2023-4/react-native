@@ -1,6 +1,7 @@
 import { LocationsState } from "../../components/molecules/LocationContext";
 import z from "zod";
 import { LocationSchema } from "../types/Location";
+import { getData, storeData } from "./asyncStorage";
 
 /**
  * Fetches Locations from the server and sets the state accordingly.
@@ -9,34 +10,65 @@ import { LocationSchema } from "../types/Location";
  * @param setState The state setter
  */
 export default async function fetchLocations(state: LocationsState, setState: React.Dispatch<React.SetStateAction<LocationsState>>): Promise<void> {
-    const response = await fetch("https://themikkel.dk/unfollow/sdu/cars/locations");
+    // Fetch locations from cache
+    const cache = await getData("locations");
 
-    // Validate correct status code from server
-    if (!response.ok) {
-        setState({
-            locations: [],
-            error: `Error: ${response.status} - ${response.statusText}`,
-            loading: false,
-        });
-        return;
-    };
+    // setup locations variable
+    let locations: unknown = null;
 
-    // Validate correct content type from server
-    const contentType = response.headers.get("Content-Type");
-    if (!contentType || !contentType.includes("application/json")) {
-        setState({
-            locations: [],
-            error: `Error: Invalid content type: ${contentType}`,
-            loading: false,
-        });
-        return;
+    //get locations from cache if it exists
+    if (cache) {
+        // get data from cache
+        locations = cache.data;
+
+        //validate cache data
+        const parsedLocations = z.array(LocationSchema).safeParse(locations);
+        if (!parsedLocations.success) {
+            // cache data is not correct, force load from server
+            locations = null;
+        } else {
+            // Set state with parsed cars
+            setState({
+                locations: parsedLocations.data,
+                error: false,
+                loading: false,
+            });
+            return;
+        }
     }
 
-    // Parse response body as json
-    const Locations = await response.json() as unknown;
+    // Get data from server if cache is empty
+    if (locations === null) {
+        const response = await fetch("https://themikkel.dk/unfollow/sdu/cars/locations");
+
+
+        // Validate correct status code from server
+        if (!response.ok) {
+            setState({
+                locations: [],
+                error: `Error: ${response.status} - ${response.statusText}`,
+                loading: false,
+            });
+            return;
+        };
+
+        // Validate correct content type from server
+        const contentType = response.headers.get("Content-Type");
+        if (!contentType || !contentType.includes("application/json")) {
+            setState({
+                locations: [],
+                error: `Error: Invalid content type: ${contentType}`,
+                loading: false,
+            });
+            return;
+        }
+
+        // Parse response body as json
+        locations = await response.json() as unknown;
+    }
 
     // Validate response body
-    const parsedLocations = z.array(LocationSchema).safeParse(Locations);
+    const parsedLocations = z.array(LocationSchema).safeParse(locations);
 
     // Validate parsing success
     if (!parsedLocations.success) {
@@ -55,4 +87,7 @@ export default async function fetchLocations(state: LocationsState, setState: Re
         error: false,
         loading: false,
     });
+
+    // Store data in cache
+    storeData("locations", parsedLocations.data, 60);
 }
