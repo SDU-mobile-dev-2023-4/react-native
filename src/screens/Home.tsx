@@ -16,8 +16,9 @@ import { useFonts, Inter_500Medium, Inter_600SemiBold, Inter_700Bold } from '@ex
 // Import the DefaultGradient component from a local file path
 import { DefaultGradient } from "../components/molecules/DefaultGradient";
 
-
-// Declare and export the 'Home' functional component which receives a 'navigation' prop
+/*
+* Declare and export the 'Home' functional component which receives a 'navigation' prop
+*/
 export default function Home({ navigation }: { navigation: any }) {
 
     // Use the 'useFonts' hook to load the specified fonts and store their loading status in the 'fontsLoaded' constant
