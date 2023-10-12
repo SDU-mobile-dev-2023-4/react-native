@@ -1,13 +1,31 @@
 import React from "react";
 import { StatusBar } from 'expo-status-bar';
-import { CardCard } from "../components/molecules/CarCard";
-import { View, StyleSheet } from "react-native";
+import { CarCard } from "../components/molecules/CarCard";
+import { View, StyleSheet, Text, TouchableOpacity } from "react-native";
+import { DefaultGradient } from "../components/molecules/DefaultGradient";
 
 export function CarBrowser({ navigation }: { navigation: any }) {
+  
   return (
     <View style={styles.container}>
       <DefaultGradient />
-      <CardCard></CardCard>
+       {/* Header Section */}
+      <View style={styles.header}>
+        <Text style={styles.headerText}>Car Rental</Text>
+        <TouchableOpacity style={styles.filterButton}/>
+      </View>
+      <View style={styles.container}>
+        <CarCard 
+      carName="Bentley Continental GT" 
+      carType="COUPE" 
+      imageLocation={require('../../assets/carpic.png')}
+      />
+      <CarCard 
+      carName="Bentley Continental GT" 
+      carType="COUPE" 
+      imageLocation={require('../../assets/carpic.png')}
+      />
+      </View>
       <StatusBar style="auto" />
     </View>
   );
@@ -17,8 +35,9 @@ export function CarBrowser({ navigation }: { navigation: any }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
+    alignItems: 'flex-start',
+    flexDirection: 'row',
+    gap: 60,
   },
     background: {
         position: 'absolute',
@@ -42,4 +61,13 @@ const styles = StyleSheet.create({
         letterSpacing: 0.25,
         color: '#fff',
     },
-});
+    header: {
+    },
+    headerText: {
+
+    },
+    filterButton: {
+
+    }
+    }
+);
