@@ -13,10 +13,13 @@ export function CarBrowser({ navigation }: { navigation: any }) {
       <View style={styles.header}>
         <Text style={styles.headerText}>Car Rental App</Text>
         <TouchableOpacity style={styles.filterButton}>
-            <Ionicons name="filter" size={24} color="white" /> {/* Filter Icon from vector lib */}
+            {/* Filter Icon from vector lib */}
+            <Ionicons name="filter" size={24} color="white" />
         </TouchableOpacity>
       </View>
-      <ScrollView style={styles.cardGrid} contentContainerStyle={styles.cardGridContent}>
+        <View style={styles.line} /> {/* Small white line below the header */}
+        <ScrollView style={styles.cardGrid} contentContainerStyle={styles.cardGridContent}>
+            {/* Car cards */}
           <CarCard
               carName="Bentley Continental GT"
               carType="COUPE"
@@ -96,6 +99,23 @@ const styles = StyleSheet.create({
     },
     filterButton: {
         padding: 10,
+    },
+    line: {
+        height: 2,
+        backgroundColor: 'white', // Small white line below the header, still NOT working
+    },
+    cardGridContent: {
+        flexDirection: 'row',
+        flexWrap: 'wrap', // Create a grid layout
+        justifyContent: 'space-between',
+    },
+    cardGrid: {
+        flex: 1,
+        padding: 16, // Add padding to space out the cards
+    },
+    cardRow: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
     },
     }
 );
