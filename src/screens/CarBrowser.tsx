@@ -111,5 +111,22 @@ const styles = StyleSheet.create({
         flexDirection: 'row', // Arrange the cards in rows
         justifyContent: 'space-between', // Space out the cards evenly
     },
+    line: {
+        height: 2,
+        backgroundColor: 'white', // Small white line below the header, still NOT working
+    },
+    cardGridContent: {
+        flexDirection: 'row',
+        flexWrap: 'wrap', // Create a grid layout
+        justifyContent: 'space-between',
+    },
+    cardGrid: {
+        flex: 1,
+        padding: 16, // Add padding to space out the cards
+    },
+    cardRow: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+    },
     }
 );
