@@ -39,12 +39,15 @@ export const CarCard = ({ carName, carType, imageLocation }: CarCardProps) => {
 const imageSizeX = 167;
 const imageSizeY = 167;
 const borderRadius = 15;
+const verticalSpacing = 40; //adjusting spacing vertical
 const styles = StyleSheet.create({
     imageContainer: {
         width: imageSizeX,
         height: imageSizeY,
         position: 'relative', // Set the container's position to relative
         borderRadius: borderRadius,
+        marginTop: verticalSpacing, // Add top margin for vertical spacing
+        marginBottom: verticalSpacing, // Add bottom margin for vertical spacing
     },
     image: {
         width: '100%',
