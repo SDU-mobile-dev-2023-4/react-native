@@ -39,7 +39,7 @@ export const CarCard = ({ carName, carType, imageLocation }: CarCardProps) => {
 const imageSizeX = 167;
 const imageSizeY = 167;
 const borderRadius = 15;
-const verticalSpacing = 40; //adjusting spacing vertical
+const verticalSpacing = 25; //adjusting spacing vertical
 const styles = StyleSheet.create({
     imageContainer: {
         width: imageSizeX,
@@ -66,7 +66,7 @@ const styles = StyleSheet.create({
     carName: {
         position: 'absolute',    // Absolute position for the text
         top: '40%',              // Position the text to the middle vertically
-        left: '0%',             // Position the text to the middle horizontally
+        left: '3%',             // Position the text to the middle horizontally
         color: 'black',          // Set text color to white
         zIndex: 1,               // Ensure text is on top
         textAlign: 'left',       // Center the text horizontally

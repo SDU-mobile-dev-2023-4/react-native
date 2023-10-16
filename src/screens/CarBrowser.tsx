@@ -17,7 +17,6 @@ export function CarBrowser({ navigation }: { navigation: any }) {
             <Ionicons name="filter" size={24} color="white" />
         </TouchableOpacity>
       </View>
-        <View style={styles.line} /> {/* Small white line below the header */}
         <ScrollView style={styles.cardGrid} contentContainerStyle={styles.cardGridContent}>
             {/* Car cards */}
           <CarCard
@@ -50,6 +49,16 @@ export function CarBrowser({ navigation }: { navigation: any }) {
               carType="COUPE"
               imageLocation={require('../../assets/carpic.png')}
           />
+            <CarCard
+                carName="Bentley Continental GT"
+                carType="COUPE"
+                imageLocation={require('../../assets/carpic.png')}
+            />
+            <CarCard
+                carName="Bentley Continental GT"
+                carType="COUPE"
+                imageLocation={require('../../assets/carpic.png')}
+            />
       </ScrollView>
       <StatusBar style="auto" />
     </View>
@@ -85,37 +94,36 @@ const styles = StyleSheet.create({
         color: '#fff',
     },
     header: {
-        flexDirection: 'row',
-        alignItems: 'center',
+        flexDirection: 'row', // Arrange header items horizontally
+        alignItems: 'center', // Align header items vertically
         justifyContent: 'space-between',
         padding: 16,
         backgroundColor: 'transparent',
         width: '100%',
     },
     headerText: {
-        fontSize: 24,
-        fontWeight: 'bold',
-        color: 'white',
+        fontSize: 32, // Set header text size
+        fontWeight: 'bold', // Set header text to bold
+        color: 'white', // Set header text color to white
+        flex: 1, // Allow the text to expand and center itself
+        textAlign: 'center', // Center the text horizontally
     },
     filterButton: {
         padding: 10,
-    },
-    line: {
-        height: 2,
-        backgroundColor: 'white', // Small white line below the header, still NOT working
+
     },
     cardGridContent: {
-        flexDirection: 'row',
+        flexDirection: 'row', // Arrange the cards in rows
         flexWrap: 'wrap', // Create a grid layout
-        justifyContent: 'space-between',
+        justifyContent: 'space-between', // Space out the cards evenly
     },
     cardGrid: {
-        flex: 1,
+        flex: 1, // Take up all screen space
         padding: 16, // Add padding to space out the cards
     },
     cardRow: {
-        flexDirection: 'row',
-        justifyContent: 'space-between',
+        flexDirection: 'row', // Arrange the cards in rows
+        justifyContent: 'space-between', // Space out the cards evenly
     },
     }
 );
