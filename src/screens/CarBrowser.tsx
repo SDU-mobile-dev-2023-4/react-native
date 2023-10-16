@@ -1,7 +1,7 @@
 import React from "react";
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, View, Button } from 'react-native';
-import { Text } from '../components/atoms/Text';
+import { Text } from '../components/atoms/Text/Text';
 
 export function CarBrowser({ navigation }: { navigation: any }) {
   return (
