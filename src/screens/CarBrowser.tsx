@@ -116,17 +116,17 @@ const styles = StyleSheet.create({
         backgroundColor: 'white', // Small white line below the header, still NOT working
     },
     cardGridContent: {
-        flexDirection: 'row',
+        flexDirection: 'row', // Arrange the cards in rows
         flexWrap: 'wrap', // Create a grid layout
-        justifyContent: 'space-between',
+        justifyContent: 'space-between', // Space out the cards evenly
     },
     cardGrid: {
-        flex: 1,
+        flex: 1, // Take up all screen space
         padding: 16, // Add padding to space out the cards
     },
     cardRow: {
-        flexDirection: 'row',
-        justifyContent: 'space-between',
+        flexDirection: 'row', // Arrange the cards in rows
+        justifyContent: 'space-between', // Space out the cards evenly
     },
     }
 );
