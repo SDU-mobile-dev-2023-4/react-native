@@ -8,15 +8,17 @@ import { Location } from "../utils/types/Location";
 import SelectDropdown from "react-native-select-dropdown";
 import { H1TextStyle, whiteTextStyle } from "../utils/styles/generalTextStyle";
 import { Text } from "../components/atoms/Text/Text";
+import { OutlineWhiteButtonStyle } from "../utils/styles/ButtonStyle";
 
 type HomeProps = NativeStackScreenProps<AppStackList, 'Home'>;
 
 /**
- * Home screen - This is the main start screen for the user, and handles the selection of a city and navigation to the 'CarBrowser' screen
+ * Home screen - This is the main start screen for the user, and handles the selection of a location and navigation to the `CarBrowser` screen
  * 
  * @param navigation - Used to navigate between screens
  */
 export default function Home(props: HomeProps) {
+    // Internally set state for the choosen location in the location selection element
     const [choosenLocation, setChoosenLocation] = React.useState<Location | null>(null);
 
     return (
@@ -25,40 +27,53 @@ export default function Home(props: HomeProps) {
             <DefaultGradient />
             {/* <!-- Begin a nested container for the app's main content --> */}
             <View style={styles.container}>
-                {/* <!-- Display the app's title "Car Rental App" with a specific style --> */}
                 <Text style={{ fontSize: 40 }} bold color="light">Car Rental App</Text>
+                {/* Select button have been abstracted into its own component, due to the complexity of the component */}
                 <SelectButton choosenLocation={choosenLocation} setChoosenLocation={setChoosenLocation} />
+                {/* Go button have been abstracted into its own component, since it is a combination of multiple components */}
                 <GoButton {...props} choosenLocation={choosenLocation} />
             </View>
         </View>
     );
 }
 
+/**
+ * Select button - This is a custom component, which handles the selection of a location
+ * 
+ * It uses the SelectDropdown by react-native-select-dropdown.  
+ * This component is only used on the `Home` screen and is therefore not exported.
+ * 
+ * @param porps - The properties passed to the component
+ */
 function SelectButton(porps: {
     choosenLocation: Location | null;
     setChoosenLocation: React.Dispatch<React.SetStateAction<Location | null>>;
 }) {
+    // Get the location context
     const locationsContext = useContext(LocationsContext);
 
     return (
+        // Use the SelectDropdown component
         <SelectDropdown
+            defaultButtonText="Select a location"
             data={locationsContext.state.locations}
             onSelect={(selectedItem) => {
-                porps.setChoosenLocation(selectedItem);
+                porps.setChoosenLocation(selectedItem); // Update the state of the choosen location through the setter
             }}
+
+            // Styling for the component
             buttonTextAfterSelection={(selectedItem) => selectedItem.name}
             rowTextForSelection={(item) => item.name}
-            buttonStyle={styles.cityselect}
+            buttonStyle={OutlineWhiteButtonStyle as object}
             buttonTextStyle={{ ...H1TextStyle, ...whiteTextStyle }}
             dropdownStyle={{
                 borderWidth: 2,
                 borderRadius: 15,
-                height: "auto",
+                height: "auto", // Ensure that the dropdown is as high as it needs to be
             }}
             rowStyle={{
                 paddingVertical: 10,
             }}
-            defaultButtonText="Select a location"
         />
     );
 }
@@ -67,7 +82,7 @@ function GoButton(props: HomeProps & { choosenLocation: Location | null }) {
     return (
         <Pressable
             style={styles.button}
-            onPress={() => props.navigation.push('CarBrowser', { location: props.choosenLocation })}
+            onPress={() => props.navigation.push('CarBrowser', { location: props.choosenLocation?.id ?? null })}
         >
             {/* <!-- Begin a container for the button's content which includes text and an image --> */}
             <View style={styles.row}>
@@ -144,32 +159,4 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         // Vertically center-align the children
     },
-
-
-
-    // Styling for a city selection element
-    cityselect: {
-        backgroundColor: 'transparent',
-        alignSelf: 'center',
-        fontSize: 30,
-        borderColor: '#fff',
-        borderWidth: 2,
-        borderRadius: 15,
-        paddingVertical: 10,
-        paddingHorizontal: 10,
-        width: '80%',
-        height: 'auto',
-    },
-
-    // Styling for the text within the city selection element
-    cityText: {
-        // White color
-        color: '#fff',
-        fontWeight: 'bold',
-        fontFamily: 'Inter_600SemiBold',
-        alignSelf: 'center',
-        fontSize: 20,
-        margin: 10
-    },
-
 });
