@@ -78,7 +78,13 @@ function SelectButton(porps: {
     );
 }
 
-function GoButton(props: HomeProps & { choosenLocation: Location | null }) {
+/**
+ * Go button - This is a custom component, which handles the navigation to the `CarBrowser` screen
+ * 
+ * @param props - Same props as the main `Home` screen, but with the addition of the choosen location state
+ * @returns {JSX.Element} Go button component
+ */
+function GoButton(props: HomeProps & { choosenLocation: Location | null }): JSX.Element {
     return (
         <Pressable
             style={styles.button}

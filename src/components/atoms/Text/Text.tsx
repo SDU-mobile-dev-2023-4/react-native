@@ -1,6 +1,11 @@
 import React from "react";
 import { Text as NativeText } from "react-native";
 
+/**
+ * Props for the Text component. Allows for further customization through styling.
+ * 
+ * The bold, light, and italic props are used to change the font styling.
+ */
 type TextProps = {
     children: string;
     style?: any;
@@ -11,7 +16,17 @@ type TextProps = {
     size?: number;
 }
 
-export const Text = (props: TextProps) => {
+/**
+ * Text component, equivalent to <p> tag in HTML.
+ * 
+ * Text color is dark by default, but can be changed to light by passing "light" to the color prop.
+ * There are further customization options through the bold, light, and italic props.
+ * 
+ * @param {TextProps} props - Props to pass to the Text component, allows for further customization.
+ * @returns {JSX.Element} Text component
+ * @see TextProps
+ */
+export const Text = (props: TextProps): JSX.Element => {
     // Default style for the text
     const style: any = {
         fontFamily: "Inter_400Regular",
