@@ -6,7 +6,6 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import Home from './Home';
 import { CarBrowser } from './CarBrowser';
 import { useContext } from 'react';
-import { Location } from '../utils/types/Location';
 import { StatusBar } from 'expo-status-bar';
 import { useFonts, Inter_200ExtraLight, Inter_300Light, Inter_400Regular, Inter_500Medium, Inter_600SemiBold, Inter_700Bold } from '@expo-google-fonts/inter';
 
@@ -19,7 +18,7 @@ import { useFonts, Inter_200ExtraLight, Inter_300Light, Inter_400Regular, Inter_
  */
 export type AppStackList = {
   Home: undefined;
-  CarBrowser: { location: Location | null };
+  CarBrowser: { location: number | null };
 };
 
 /**
@@ -37,7 +36,7 @@ stack.Navigator.defaultProps = {
 };
 
 /**
- * Main app component.
+ * Main app handler.
  */
 export default function App() {
   return (
@@ -55,7 +54,7 @@ export default function App() {
 /**
  * Navigation aspect of the app.
  * 
- * This is used, to better separate the navigation from the main app component.  
+ * This is used, to better separate the navigation from the main app handler.  
  * It also allows for better usage of the context providers.
  */
 function Navigation() {
@@ -73,13 +72,14 @@ function Navigation() {
     Inter_700Bold,
   });
 
-  // Show loading screen if either of the context providers are loading
+  // Show loading screen if the app is not quite ready yet
   if (carsContext.state.loading || locationsContext.state.loading || !fontsLoaded) {
     return (
       <Loading />
     )
   }
 
+  // Log the app loading, for debugging purposes
   console.debug("App Loaded", carsContext, locationsContext);
 
   // Return the navigation container
