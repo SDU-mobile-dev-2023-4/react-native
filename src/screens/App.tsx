@@ -6,43 +6,88 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import Home from './Home';
 import { CarBrowser } from './CarBrowser';
 import { useContext } from 'react';
+import { StatusBar } from 'expo-status-bar';
+import { useFonts, Inter_200ExtraLight, Inter_300Light, Inter_400Regular, Inter_500Medium, Inter_600SemiBold, Inter_700Bold } from '@expo-google-fonts/inter';
 
-const stack = createNativeStackNavigator();
+/**
+ * Screens in main stack navigator.
+ * 
+ * This type defines the screens that can be navigated to from the stack navigator.
+ * 
+ * @see https://reactnavigation.org/docs/typescript
+ */
+export type AppStackList = {
+  Home: undefined;
+  CarBrowser: { location: number | null };
+};
 
+/**
+ * Main stack navigator for the app.
+ */
+export const stack = createNativeStackNavigator<AppStackList>();
+
+/**
+ * Default properties for the main stack navigator.
+ */
 stack.Navigator.defaultProps = {
   screenOptions: {
     headerShown: false,
   },
 };
 
+/**
+ * Main app handler.
+ */
 export default function App() {
   return (
-    <CarsProvider>
-      <LocationsProvider>
-        <Navigation />
-      </LocationsProvider>
-    </CarsProvider>
+    <>
+      <StatusBar style="auto" />
+      <CarsProvider>
+        <LocationsProvider>
+          <Navigation />
+        </LocationsProvider>
+      </CarsProvider>
+    </>
   );
 }
 
+/**
+ * Navigation aspect of the app.
+ * 
+ * This is used, to better separate the navigation from the main app handler.  
+ * It also allows for better usage of the context providers.
+ */
 function Navigation() {
-
+  // Get the context providers
   const carsContext = useContext(CarsContext);
   const locationsContext = useContext(LocationsContext);
 
-  if (carsContext.state.loading || locationsContext.state.loading) {
+  // Use the 'useFonts' hook to load the specified fonts and store their loading status in the 'fontsLoaded' constant
+  const [fontsLoaded] = useFonts({
+    Inter_200ExtraLight,
+    Inter_300Light,
+    Inter_400Regular,
+    Inter_500Medium,
+    Inter_600SemiBold,
+    Inter_700Bold,
+  });
+
+  // Show loading screen if the app is not quite ready yet
+  if (carsContext.state.loading || locationsContext.state.loading || !fontsLoaded) {
     return (
       <Loading />
     )
   }
 
+  // Log the app loading, for debugging purposes
   console.debug("App Loaded", carsContext, locationsContext);
 
+  // Return the navigation container
   return (
     <NavigationContainer>
       <stack.Navigator initialRouteName="Home">
         <stack.Screen name="Home" component={Home} />
-        <stack.Screen name="CarBrowser" component={CarBrowser} />
+        <stack.Screen name="CarBrowser" component={CarBrowser} initialParams={{ location: null }} />
       </stack.Navigator>
     </NavigationContainer>
   );

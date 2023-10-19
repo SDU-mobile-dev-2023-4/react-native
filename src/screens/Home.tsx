@@ -1,197 +1,168 @@
-// Import the base React library
-import React from "react";
-
-// Import the StatusBar component from the 'expo-status-bar' package
-import { StatusBar } from 'expo-status-bar';
-
-// Import multiple components and modules from the 'react-native' library
-import { StyleSheet, View, Button, Pressable, Text, Image } from 'react-native';
-
-// Import the LinearGradient component from the 'expo-linear-gradient' package
-import { LinearGradient } from "expo-linear-gradient";
-
-// Import the useFonts hook and specific font styles from the '@expo-google-fonts/inter' package
-import { useFonts, Inter_500Medium, Inter_600SemiBold, Inter_700Bold } from '@expo-google-fonts/inter';
-
-// Import the DefaultGradient component from a local file path
+import React, { useContext } from "react";
+import { StyleSheet, View, Pressable, Image } from 'react-native';
 import { DefaultGradient } from "../components/molecules/DefaultGradient";
+import { NativeStackScreenProps } from "@react-navigation/native-stack";
+import { AppStackList } from "./App";
+import { LocationsContext } from "../components/molecules/LocationContext";
+import { Location } from "../utils/types/Location";
+import SelectDropdown from "react-native-select-dropdown";
+import { H1TextStyle, whiteTextStyle } from "../utils/styles/generalTextStyle";
+import { Text } from "../components/atoms/Text/Text";
+import { OutlineWhiteButtonStyle } from "../utils/styles/ButtonStyle";
 
-/*
-* Declare and export the 'Home' functional component which receives a 'navigation' prop
-*/
-export default function Home({ navigation }: { navigation: any }) {
+type HomeProps = NativeStackScreenProps<AppStackList, 'Home'>;
 
-    // Use the 'useFonts' hook to load the specified fonts and store their loading status in the 'fontsLoaded' constant
-    const [fontsLoaded] = useFonts({
-        Inter_500Medium,       // Load the 'Inter_500Medium' font style
-        Inter_600SemiBold,     // Load the 'Inter_600SemiBold' font style
-        Inter_700Bold          // Load the 'Inter_700Bold' font style
-    });
-    //Check if fonts are loaded 
-      if (!fontsLoaded) {
-        //If not loaded return a loading screen
-        return (
-          <view style={styles.body}>
-            {/* <!-- apply the default gradient as a background --> */}
-            <DefaultGradient />
-            {/* <!-- display a "loading..." text with a specific style --> */}
-            <text style={styles.buttontext}>loading...</text>
-          </view>
-        );
-      }
-    // If fonts are loaded, return the following
-      return (
-        // Begin a container for the main body
+/**
+ * Home screen - This is the main start screen for the user, and handles the selection of a location and navigation to the `CarBrowser` screen
+ * 
+ * @param navigation - Used to navigate between screens
+ */
+export default function Home(props: HomeProps) {
+    // Internally set state for the choosen location in the location selection element
+    const [choosenLocation, setChoosenLocation] = React.useState<Location | null>(null);
+
+    return (
         <View style={styles.body}>
-            {/* <!-- Apply the default gradient as a background --> */}
+            {/* <!-- Apply the default gradient as a background, which is its own component --> */}
             <DefaultGradient />
             {/* <!-- Begin a nested container for the app's main content --> */}
             <View style={styles.container}>
-                {/* <!-- Display the app's title "Car Rental App" with a specific style --> */}
-                <Text style={styles.text}>Car Rental App</Text>
-                {/* <!-- Create a clickable (pressable) button for city selection --> */}
-                <Pressable style={styles.cityselect}>
-                    {/* <!-- Display the "Select City" text within the button with a specific style --> */}
-                    <Text style={styles.cityText}>Select City</Text>
-                </Pressable>
-                {/* <!-- Display the device's status bar with an automatic style --> */}
-                <StatusBar style="auto" />
-                {/* <!-- Create a clickable (pressable) button that will navigate to the 'CarBrowser' screen when pressed --> */}
-                <Pressable
-                    style={styles.button}
-                    onPress={() => navigation.push('CarBrowser')}
-                >
-                    {/* <!-- Begin a container for the button's content which includes text and an image --> */}
-                    <View style={styles.row}>
-                        {/* <!-- Display the "GO!" text with a specific style --> */}
-                        <Text style={styles.buttontext}>GO! </Text>
-                        {/* <!-- Display an image next to the "GO!" text, loading the image from a specific path and applying specific dimensions --> */}
-                        <Image source={require('../../assets/GO.png')} style={{ width: imageSize, height: imageSize }} />
-                    </View>
-                </Pressable>
+                <Text style={{ fontSize: 40 }} bold color="light">Car Rental App</Text>
+                {/* Select button have been abstracted into its own component, due to the complexity of the component */}
+                <SelectButton choosenLocation={choosenLocation} setChoosenLocation={setChoosenLocation} />
+                {/* Go button have been abstracted into its own component, since it is a combination of multiple components */}
+                <GoButton {...props} choosenLocation={choosenLocation} />
             </View>
         </View>
     );
 }
 
+/**
+ * Select button - This is a custom component, which handles the selection of a location
+ * 
+ * It uses the SelectDropdown by react-native-select-dropdown.  
+ * This component is only used on the `Home` screen and is therefore not exported.
+ * 
+ * @param porps - The properties passed to the component
+ */
+function SelectButton(porps: {
+    choosenLocation: Location | null;
+    setChoosenLocation: React.Dispatch<React.SetStateAction<Location | null>>;
+}) {
+    // Get the location context
+    const locationsContext = useContext(LocationsContext);
+
+    return (
+        // Use the SelectDropdown component
+        <SelectDropdown
+            defaultButtonText="Select a location"
+            data={locationsContext.state.locations}
+            onSelect={(selectedItem) => {
+                porps.setChoosenLocation(selectedItem); // Update the state of the choosen location through the setter
+            }}
+
+            // Styling for the component
+            buttonTextAfterSelection={(selectedItem) => selectedItem.name}
+            rowTextForSelection={(item) => item.name}
+            buttonStyle={OutlineWhiteButtonStyle as object}
+            buttonTextStyle={{ ...H1TextStyle, ...whiteTextStyle }}
+            dropdownStyle={{
+                borderWidth: 2,
+                borderRadius: 15,
+                height: "auto", // Ensure that the dropdown is as high as it needs to be
+            }}
+            rowStyle={{
+                paddingVertical: 10,
+            }}
+        />
+    );
+}
+
+/**
+ * Go button - This is a custom component, which handles the navigation to the `CarBrowser` screen
+ * 
+ * @param props - Same props as the main `Home` screen, but with the addition of the choosen location state
+ * @returns {JSX.Element} Go button component
+ */
+function GoButton(props: HomeProps & { choosenLocation: Location | null }): JSX.Element {
+    return (
+        <Pressable
+            style={styles.button}
+            onPress={() => props.navigation.push('CarBrowser', { location: props.choosenLocation?.id ?? null })}
+        >
+            {/* <!-- Begin a container for the button's content which includes text and an image --> */}
+            <View style={styles.row}>
+                {/* <!-- Display the "GO!" text with a specific style --> */}
+                <Text style={styles.buttontext}>GO! </Text>
+                {/* <!-- Display an image next to the "GO!" text, loading the image from a specific path and applying specific dimensions --> */}
+                <Image source={require('../../assets/GO.png')} style={{ width: imageSize, height: imageSize }} />
+            </View>
+        </Pressable>
+    );
+}
+
 // Define a constant for image size
-const imageSize= 30;
+const imageSize = 30;
 
 const styles = StyleSheet.create({
+
     // Styling for the main body container
     body: {
-        backgroundColor: '#transparent',  
+        backgroundColor: '#transparent',
         // Set background color to transparent
-        alignItems: 'center',              
+        alignItems: 'center',
         // Horizontally center child elements
-        justifyContent: 'center',         
+        justifyContent: 'center',
         // Vertically center child elements
-        height: '100%'                    
+        height: '100%'
         // Occupy the full height of the parent
     },
-    
+
     // Styling for a secondary container
     container: {
-        backgroundColor: '#transparent',  
+        backgroundColor: '#transparent',
         // Set background color to transparent
-        alignItems: 'center',              
+        alignItems: 'center',
         // Horizontally center child elements
-        justifyContent: 'space-between',  
+        justifyContent: 'space-between',
         // Distribute child elements evenly with space between them
-        height: '45%',                    
+        height: '45%',
         // Occupy 45% of the parent's height
     },
-    
+
     // Styling for a button element
     button: {
-        backgroundColor: '#EA4646',       
+        backgroundColor: '#EA4646',
         // Set background color to a shade of red
-        borderRadius: 20,                 
+        borderRadius: 20,
         // Round the corners with a radius of 20
-        paddingVertical: 10,              
+        paddingVertical: 10,
         // Apply vertical padding
-        paddingHorizontal: 80,            
+        paddingHorizontal: 80,
         // Apply horizontal padding
-    },
-    
-    // Styling for the text within the button
-    buttontext: {
-        color: '#fff',                    
-        // Set text color to white
-        alignSelf: 'center',              
-        // Center the text element within its parent container
-        fontWeight: '100',                
-        // Set font weight
-        textTransform: 'uppercase',       
-        // Convert text to uppercase
-        fontSize: 32,                     
-        // Set font size
-        marginRight: 15,                  
-        // Apply margin to the right
-        fontFamily: 'Inter_500Medium',    
-        // Set font family
-    },
-    
-    // Styling for a container that arranges children in a row
-    row: {
-        flexDirection: 'row',             
-        // Arrange children horizontally
-        alignItems: 'center',             
-         // Vertically center-align the children
-    },
-    
-    // Styling for a general text element
-    text: {
-        color: '#fff',                    
-        // Set text color to white
-        fontFamily: 'Inter_700Bold',      
-        // Set font family
-        alignSelf: 'center',              
-        // Center the text element within its parent container
-        fontWeight: 'bold',               
-        // Set font weight to bold
-        fontSize: 40,                     
-        // Set font size
-        marginRight: 15,                  
-        // Apply margin to the right
-    },
-    
-    // Styling for a city selection element
-    cityselect: {
-        color: '#transparent',            
-        // Set text color to transparent
-        alignSelf: 'center',              
-        // Center the element within its parent container
-        fontSize: 30,                     
-        // Set font size
-        marginRight: 15,                  
-        // Apply margin to the right
-        borderColor: '#fff',              
-        // Set border color to white
-        borderWidth: 2,                   
-        // Set border width
-        borderRadius: 15,                 
-        // Round the corners with a radius of 15
-        paddingVertical: 10,              
-        // Apply vertical padding
-        paddingHorizontal: 10,            
-        // Apply horizontal padding
-    },
-    
-    // Styling for the text within the city selection element
-    cityText: {
-        color: '#fff',                    
-        // Set text color to white
-        fontWeight: 'bold',               
-        // Set font weight to bold
-        fontFamily: 'Inter_600SemiBold',  
-        // Set font family
-        alignSelf: 'center',              
-        // Center the text element within its parent container
-        fontSize: 20,                     
-        // Set font size
-        marginRight: 15,                  
-        // Apply margin to the right
     },
 
+    // Styling for the text within the button
+    buttontext: {
+        color: '#fff',
+        // Set text color to white
+        alignSelf: 'center',
+        // Center the text element within its parent container
+        fontWeight: '100',
+        // Set font weight
+        textTransform: 'uppercase',
+        // Convert text to uppercase
+        fontSize: 32,
+        // Set font size
+        fontFamily: 'Inter_500Medium',
+        // Set font family
+    },
+
+    // Styling for a container that arranges children in a row
+    row: {
+        flexDirection: 'row',
+        // Arrange children horizontally
+        alignItems: 'center',
+        // Vertically center-align the children
+    },
 });
