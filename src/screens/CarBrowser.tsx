@@ -85,6 +85,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row', // Arrange the cards in rows
         flexWrap: 'wrap', // Create a grid layout
         justifyContent: 'space-between', // Space out the cards evenly
+        gap: 40, // Add some spacing between the cards
     },
     cardGrid: {
         flex: 1, // Take up all screen space
