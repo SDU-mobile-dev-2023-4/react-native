@@ -1,8 +1,6 @@
 import React from "react";
 import { StyleSheet, View, Text, Image } from "react-native";
 import { LinearGradient } from 'expo-linear-gradient';
-import { Inter_500Medium, Inter_700Bold, Inter_300Light, useFonts } from "@expo-google-fonts/inter";
-
 
 // Define the CarCard component to accept carName, carType, and imageLocation as props
 type CarCardProps = {
@@ -10,6 +8,7 @@ type CarCardProps = {
     carType: string;
     imageLocation: any;
 };
+
 /*
 * CarCard
 * @param carName - The name of the car
