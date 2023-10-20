@@ -10,13 +10,14 @@ type CarCardProps = {
     carType: string;
     imageLocation: any;
 };
-
+/*
+* CarCard
+* @param carName - The name of the car
+* @param carType - The type of the car
+* @param imageLocation - The location of the image, remember require(/path/to/image)
+* @returns {JSX.Element} - A car card component
+*/
 export const CarCard = ({ carName, carType, imageLocation }: CarCardProps) => {
-    const [fontsLoaded] = useFonts({
-        Inter_500Medium,
-        Inter_700Bold,
-        Inter_300Light
-    });
     return (
         <View style={styles.imageContainer}>
             {/* Use the passed imageLocation prop for the Image source */}
