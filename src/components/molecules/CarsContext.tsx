@@ -1,7 +1,6 @@
 import React, { useEffect } from "react";
 import { Car } from "../../utils/types/Car";
 import fetchCars from "../../utils/Api/fetchCars";
-import AsyncStorage from '@react-native-async-storage/async-storage';
 
 /**
  * CarsState
@@ -56,10 +55,10 @@ interface CarsProviderProps {
  * Provider for the CarsContext. It sets the initial state and fetches the cars from the API.
  * This have to wrap all the components that need to access the cars state.
  * 
- * @param {React.ReactNode} children
- * @returns {React.ReactNode}
+ * @param props Props for the CarsProvider component.
+ * @returns Provider for the CarsContext.
  */
-export const CarsProvider = ({ children }: CarsProviderProps) => {
+export const CarsProvider = (props: CarsProviderProps) => {
     const [state, setState] = React.useState<CarsState>({
         cars: [],
         error: false,
@@ -67,15 +66,12 @@ export const CarsProvider = ({ children }: CarsProviderProps) => {
     });
 
     useEffect(() => {
-        console.log("CarsProvider: useEffect")
         fetchCars(state, setState);
     }, []);
 
-    console.log(state);
-
     return (
         <CarsContext.Provider value={{ state: state, setState }}>
-            {children}
+            {props.children}
         </CarsContext.Provider>
     );
 }
