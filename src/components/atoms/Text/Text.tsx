@@ -6,7 +6,7 @@ import { Text as NativeText } from "react-native";
  * 
  * The bold, light, and italic props are used to change the font styling.
  */
-type TextProps = {
+export type TextProps = {
     children: string;
     style?: any;
     bold?: boolean;

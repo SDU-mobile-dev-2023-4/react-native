@@ -1,13 +1,12 @@
 import { H1TextStyle, whiteTextStyle } from "../../../utils/styles/generalTextStyle";
-import { Text } from "./Text";
+import { Text, TextProps as RawTextProps } from "./Text";
 
 /**
  * Props for the H1 component. Allows for further customization through styling and choosing text color.
  */
-export type TextProps = {
+export type TextProps = RawTextProps & {
     children: string;
     style?: any;
-    color?: "light" | "dark";
 }
 
 /**
@@ -20,11 +19,7 @@ export type TextProps = {
  * @see TextProps
  */
 export const H1 = (props: TextProps): JSX.Element => {
-    let style = { ...props.style, ...H1TextStyle };
-
-    if (props.color === "light") {
-        style = { ...style, ...whiteTextStyle };
-    }
+    let style = { ...H1TextStyle, ...props.style };
 
     return (
         <Text {...props} style={style} />

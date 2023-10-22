@@ -9,6 +9,7 @@ import SelectDropdown from "react-native-select-dropdown";
 import { H1TextStyle, whiteTextStyle } from "../utils/styles/generalTextStyle";
 import { Text } from "../components/atoms/Text/Text";
 import { OutlineWhiteButtonStyle } from "../utils/styles/ButtonStyle";
+import Button from "../components/atoms/Button";
 
 type HomeProps = NativeStackScreenProps<AppStackList, 'Home'>;
 
@@ -86,18 +87,14 @@ function SelectButton(porps: {
  */
 function GoButton(props: HomeProps & { choosenLocation: Location | null }): JSX.Element {
     return (
-        <Pressable
-            style={styles.button}
-            onPress={() => props.navigation.push('CarBrowser', { location: props.choosenLocation?.id ?? null })}
+        <Button
+            onPress={() => props.navigation.push('CarDetails', { carId: 1 })}
         >
-            {/* <!-- Begin a container for the button's content which includes text and an image --> */}
-            <View style={styles.row}>
-                {/* <!-- Display the "GO!" text with a specific style --> */}
-                <Text style={styles.buttontext}>GO! </Text>
-                {/* <!-- Display an image next to the "GO!" text, loading the image from a specific path and applying specific dimensions --> */}
-                <Image source={require('../../assets/GO.png')} style={{ width: imageSize, height: imageSize }} />
-            </View>
-        </Pressable>
+            {/* <!-- Display the "GO!" text with a specific style --> */}
+            <Text style={styles.buttontext}>GO! </Text>
+            {/* <!-- Display an image next to the "GO!" text, loading the image from a specific path and applying specific dimensions --> */}
+            <Image source={require('../../assets/GO.png')} style={{ width: imageSize, height: imageSize }} />
+        </Button>
     );
 }
 
