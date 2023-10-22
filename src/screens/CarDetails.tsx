@@ -1,18 +1,23 @@
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import React, { useContext } from "react";
-import { Image, Platform, StyleSheet, View } from "react-native";
+import { Image, View } from "react-native";
 import { AppStackList } from "./App";
 import { CarsContext } from "../components/molecules/CarsContext";
-import { DefaultBodyStyle, DefaultContainerStyle } from "../utils/styles/ContainerStyles";
+import { DefaultBodyStyle } from "../utils/styles/ContainerStyles";
 import NotFound from "../components/molecules/NotFound";
 import { H1 } from "../components/atoms/Text/H1";
 import Button from "../components/atoms/Button";
 import { LinearGradient } from "expo-linear-gradient";
 import { H3 } from "../components/atoms/Text/H3";
-import PlatformSelect from "../components/molecules/PlatformSelect";
 
 type CarDetailsProps = NativeStackScreenProps<AppStackList, 'CarDetails'>;
 
+/**
+ * Car details page, to show the details of a specific car.
+ * 
+ * @param props Properties for the component
+ * @returns A full page component for the car details page
+ */
 export default function CarDetails(props: CarDetailsProps) {
 
     // Get the car context which contains the cars
@@ -36,47 +41,25 @@ export default function CarDetails(props: CarDetailsProps) {
 
     return (
         <View style={{ backgroundColor: "white", height: "100%" }}>
-            <PlatformSelect
-                native={
-                    <View style={{ width: "100%", height: "40%", position: "absolute" }}>
-                        <Image source={{ uri: car.pictures[0].srcUrl }} style={{ width: "100%", height: "100%" }} />
-                        <LinearGradient
-                            colors={['transparent', "#ffffffe6", 'white']}
-                            locations={[0, 0.8, 1]}
-                            style={{
-                                position: 'absolute', // Absolute position for the gradient
-                                left: 0,
-                                right: 0,
-                                bottom: 0,
-                                height: '50%', // covers half the image from the bottom up
-                                borderColor: "transparent",
-                            }}
-                            start={{ x: 0, y: 0 }}
-                            end={{ x: 0, y: 1 }}
-                        />
-                    </View>
-                }
-                default={
-                    <div style={{
-                        height: "45%",
-                        width: "100%",
-                        position: "absolute",
-                    }}>
-                        <img src={car.pictures[0].srcUrl} style={{
-                            width: "100%",
-                            height: "99%",
-                            objectFit: "cover",
-                            position: "absolute",
-                        }} />
-                        <div style={{
-                            background: "linear-gradient(180deg, rgba(255,255,255,0) 50%, rgba(255,255,255,0.9) 75%, rgba(255,255,255,1) 100%)",
-                            width: "100%",
-                            height: "100%",
-                            position: "absolute",
-                        }} />
-                    </div>
-                }
-            />
+            {/* Image view - Is absolute to render behind the content af the details page */}
+            <View style={{ width: "100%", height: "40%", position: "absolute" }}>
+                <Image source={{ uri: car.pictures[0].srcUrl }} style={{ width: "100%", height: "100%" }} />
+                <LinearGradient
+                    colors={['transparent', "#ffffffe6", 'white']}
+                    locations={[0, 0.8, 1]}
+                    style={{
+                        position: 'absolute', // Absolute position for the gradient
+                        left: 0,
+                        right: 0,
+                        bottom: 0,
+                        height: '50%', // covers half the image from the bottom up
+                        borderColor: "transparent",
+                    }}
+                    start={{ x: 0, y: 0 }}
+                    end={{ x: 0, y: 1 }}
+                />
+            </View>
+            {/* Content view */}
             <View style={{ ...(DefaultBodyStyle as object), height: '100%', width: "100%", position: "absolute" }}>
                 < View style={{
                     backgroundColor: '#transparent',
@@ -100,6 +83,7 @@ export default function CarDetails(props: CarDetailsProps) {
                             {car.type}
                         </H3>
                     </View>
+                    {/* Move forward button */}
                     <View style={{
                         display: 'flex',
                         alignItems: 'center',
@@ -111,7 +95,7 @@ export default function CarDetails(props: CarDetailsProps) {
                         >
                             <H1 color="light" bold>Order car</H1>
                             <View style={{ marginTop: 2 }}>
-                                <Image source={require('../../assets/right-arrow.png')} style={{ width: imageSize, height: imageSize, marginLeft: 10 }} />
+                                <Image source={require('../../assets/right-arrow.png')} style={{ width: 26, height: 26, marginLeft: 10 }} />
                             </View>
                         </Button>
                     </View>
@@ -121,8 +105,9 @@ export default function CarDetails(props: CarDetailsProps) {
     );
 }
 
-const imageSize = 26;
-
+/**
+ * Render an error page.
+ */
 function errorPage(props: CarDetailsProps) {
     return (
         <NotFound goBack={() => props.navigation.goBack()} />

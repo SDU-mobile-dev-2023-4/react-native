@@ -16,7 +16,7 @@ type HomeProps = NativeStackScreenProps<AppStackList, 'Home'>;
 /**
  * Home screen - This is the main start screen for the user, and handles the selection of a location and navigation to the `CarBrowser` screen
  * 
- * @param navigation - Used to navigate between screens
+ * @param props - The properties passed to the component
  */
 export default function Home(props: HomeProps) {
     // Internally set state for the choosen location in the location selection element
