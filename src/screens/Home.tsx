@@ -88,7 +88,7 @@ function SelectButton(porps: {
 function GoButton(props: HomeProps & { choosenLocation: Location | null }): JSX.Element {
     return (
         <Button
-            onPress={() => props.navigation.push('CarDetails', { carId: 1 })}
+            onPress={() => props.navigation.push("CarBrowser", { location: props.choosenLocation?.id ?? null })}
         >
             {/* <!-- Display the "GO!" text with a specific style --> */}
             <Text style={styles.buttontext}>GO! </Text>
