@@ -8,7 +8,6 @@ import { CarBrowser } from './CarBrowser';
 import { useContext } from 'react';
 import { StatusBar } from 'expo-status-bar';
 import { useFonts, Inter_200ExtraLight, Inter_300Light, Inter_400Regular, Inter_500Medium, Inter_600SemiBold, Inter_700Bold } from '@expo-google-fonts/inter';
-
 /**
  * Screens in main stack navigator.
  * 
