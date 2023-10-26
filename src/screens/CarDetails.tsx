@@ -1,6 +1,6 @@
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import React, { useContext } from "react";
-import { Image, View } from "react-native";
+import { Image, Pressable, View } from "react-native";
 import { AppStackList } from "./App";
 import { CarsContext } from "../components/molecules/CarsContext";
 import { DefaultBodyStyle } from "../utils/styles/ContainerStyles";
@@ -43,7 +43,7 @@ export default function CarDetails(props: CarDetailsProps) {
         <View style={{ backgroundColor: "white", height: "100%" }}>
             {/* Image view - Is absolute to render behind the content af the details page */}
             <View style={{ width: "100%", height: "40%", position: "absolute" }}>
-                <Image source={{ uri: car.pictures[0].srcUrl }} style={{ width: "100%", height: "100%" }} />
+                <Image source={{ uri: car.pictures[0].srcUrl }} style={{ width: "100%", height: "99%" }} />
                 <LinearGradient
                     colors={['transparent', "#ffffffe6", 'white']}
                     locations={[0, 0.8, 1]}
@@ -68,11 +68,12 @@ export default function CarDetails(props: CarDetailsProps) {
                     height: '100%',
                     width: "90%",
                 }}>
+                    {/* Car details */}
                     <View style={{
                         display: 'flex',
                         alignItems: 'center',
                         justifyContent: 'center',
-                        marginTop: "85%",
+                        marginTop: "75%",
                     }}>
                         <H1 bold style={{ fontSize: 35 }}>
                             {car.name}
@@ -101,6 +102,15 @@ export default function CarDetails(props: CarDetailsProps) {
                     </View>
                 </View >
             </View >
+            <View style={{
+                position: "absolute",
+                top: 0,
+                left: 0,
+            }}>
+                <Pressable onPress={() => props.navigation.goBack()}>
+                    <Image source={require('../../assets/right-arrow.png')} style={{ width: 26, height: 26, marginLeft: 10, marginTop: 10, transform: [{ rotate: "180deg" }] }} />
+                </Pressable>
+            </View>
         </View>
     );
 }
