@@ -9,16 +9,17 @@ import { H1 } from "../components/atoms/Text/H1";
 import Button from "../components/atoms/Button";
 import { LinearGradient } from "expo-linear-gradient";
 import { H3 } from "../components/atoms/Text/H3";
+import { FontAwesome5 } from '@expo/vector-icons';
 
-type CarDetailsProps = NativeStackScreenProps<AppStackList, 'CarDetails'>;
+type OrderProps = NativeStackScreenProps<AppStackList, 'Order'>;
 
 /**
- * Car details page, to show the details of a specific car.
+ * Order page, to enter the information needed to book a specific car.
  * 
  * @param props Properties for the component
- * @returns A full page component for the car details page
+ * @returns A full page component for the order page
  */
-export default function CarDetails(props: CarDetailsProps) {
+export default function Order(props: OrderProps) {
 
     // Get the car context which contains the cars
     const cars = useContext(CarsContext);
@@ -41,9 +42,9 @@ export default function CarDetails(props: CarDetailsProps) {
 
     return (
         <View style={{ backgroundColor: "white", height: "100%" }}>
-            {/* Image view - Is absolute to render behind the content af the details page */}
+            {/* Image view - Is absolute to render behind the content of the order page */}
             <View style={{ width: "100%", height: "40%", position: "absolute" }}>
-                <Image source={{ uri: car.pictures[0].srcUrl }} style={{ width: "100%", height: "100%" }} />
+                {/* <Image source={{ uri: car.pictures[0].srcUrl }} style={{ width: "100%", height: "100%" }} /> */}
                 <LinearGradient
                     colors={['transparent', "#ffffffe6", 'white']}
                     locations={[0, 0.8, 1]}
@@ -51,7 +52,7 @@ export default function CarDetails(props: CarDetailsProps) {
                         position: 'absolute', // Absolute position for the gradient
                         left: 0,
                         right: 0,
-                        bottom: 0,
+                        bottom: 0,    
                         height: '50%', // covers half the image from the bottom up
                         borderColor: "transparent",
                     }}
@@ -91,11 +92,12 @@ export default function CarDetails(props: CarDetailsProps) {
                         marginBottom: "15%"
                     }}>
                         <Button
-                            onPress={() => props.navigation.push("Order", { carId: car.id })}
+                            onPress={() => props.navigation.goBack()}
                         >
                             <H1 color="light" bold>Order car</H1>
                             <View style={{ marginTop: 2 }}>
-                                <Image source={require('../../assets/right-arrow.png')} style={{ width: 26, height: 26, marginLeft: 10 }} />
+                                <FontAwesome5 name="shopping-cart" size={24} color="white" />
+                                {/* <Image source={require('../../assets/right-arrow.png')} style={{ width: 26, height: 26, marginLeft: 10 }} /> */}
                             </View>
                         </Button>
                     </View>
@@ -108,7 +110,7 @@ export default function CarDetails(props: CarDetailsProps) {
 /**
  * Render an error page.
  */
-function errorPage(props: CarDetailsProps) {
+function errorPage(props: OrderProps) {
     return (
         <NotFound goBack={() => props.navigation.goBack()} />
     );
