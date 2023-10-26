@@ -12,6 +12,19 @@ export enum CarType {
     SUV = "SUV",
     Truck = "Truck",
     Compact = "Compact",
+    Coupe = "Coupe",
+    Convertible = "Convertible",
+    Wagon = "Wagon",
+    Van = "Van",
+    Motorcycle = "Motorcycle",
+    Electric = "Electric",
+    Sports = "Sports",
+    Hatchback = "Hatchback",
+    UFO = "UFO",
+    Hybrid = "Hybrid",
+    Muscle = "Muscle",
+    MilitaryJet = "Military Jet",
+    Other = "Other",
 }
 
 /**
