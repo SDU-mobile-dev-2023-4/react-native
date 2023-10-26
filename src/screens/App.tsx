@@ -9,6 +9,7 @@ import { useContext } from 'react';
 import { StatusBar } from 'expo-status-bar';
 import { useFonts, Inter_200ExtraLight, Inter_300Light, Inter_400Regular, Inter_500Medium, Inter_600SemiBold, Inter_700Bold } from '@expo-google-fonts/inter';
 import CarDetails from './CarDetails';
+import Error from './Error';
 
 /**
  * Screens in main stack navigator.
@@ -78,6 +79,13 @@ function Navigation() {
   if (carsContext.state.loading || locationsContext.state.loading || !fontsLoaded) {
     return (
       <Loading />
+    )
+  }
+
+  // Show error screen if the app failed to load
+  if (carsContext.state.error || locationsContext.state.error) {
+    return (
+      <Error />
     )
   }
 
