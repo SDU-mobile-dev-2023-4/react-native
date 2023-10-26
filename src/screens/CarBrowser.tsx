@@ -5,9 +5,24 @@ import { View, StyleSheet, Text, TouchableOpacity, ScrollView } from "react-nati
 import { DefaultGradient } from "../components/molecules/DefaultGradient";
 import { Ionicons } from '@expo/vector-icons';
 import { CarsContext } from "../components/molecules/CarsContext";
+import { NativeStackScreenProps } from "@react-navigation/native-stack";
+import { AppStackList } from "./App";
+import { Car } from "../utils/types/Car";
 
-export function CarBrowser({ navigation }: { navigation: any }) {
+type CarBrowserProps = NativeStackScreenProps<AppStackList, 'CarBrowser'>;
+
+export function CarBrowser(props: CarBrowserProps) {
   const { state } = useContext(CarsContext);
+  const location = props.route.params.location;
+  if (!location) {
+    return (
+      <View style={styles.container}>
+        <DefaultGradient />
+        <Text style={styles.headerText}>No location selected</Text>
+      </View>
+    );
+  }
+  const carsFound = state.cars.filter((car) => car.location.id === location);
   return (
     <View style={styles.container}>
       <DefaultGradient />
@@ -19,8 +34,25 @@ export function CarBrowser({ navigation }: { navigation: any }) {
             <Ionicons name="filter" size={24} color="white" />
         </TouchableOpacity>
       </View>
+      {listCars(carsFound)}
+        {/* Line below header */}
+            
+      <StatusBar style="auto" />
+    </View>
+  );
+}
+
+function listCars(carsFound: Array<Car>) {
+    if (carsFound.length === 0) {
+        return (
+            <View style={styles.justifyCenter}>
+                <Text style={styles.headerText}>No cars found</Text>
+            </View>
+        );
+    }
+    return (
         <ScrollView style={styles.cardGrid} contentContainerStyle={styles.cardGridContent}>
-            {state.cars.map((car) => (
+            {carsFound.map((car) => (
                 <CarCard
                     key={car.id}
                     carName={car.name}
@@ -28,17 +60,16 @@ export function CarBrowser({ navigation }: { navigation: any }) {
                     imageLocation={require("../../assets/carpic.png")}
                 />
             ))}
-      </ScrollView>
-      <StatusBar style="auto" />
-    </View>
-  );
+        </ScrollView>
+    );
 }
-
-
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: 'flex-start',
+    justifyCenter: {
+        justifyContent: 'center',
+    },
+    container: {
+        flex: 1,
+        alignItems: 'flex-start',
     },
     background: {
         position: 'absolute',
