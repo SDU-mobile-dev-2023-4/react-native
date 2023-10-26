@@ -10,6 +10,7 @@ import { StatusBar } from 'expo-status-bar';
 import { useFonts, Inter_200ExtraLight, Inter_300Light, Inter_400Regular, Inter_500Medium, Inter_600SemiBold, Inter_700Bold } from '@expo-google-fonts/inter';
 import CarDetails from './CarDetails';
 import Error from './Error';
+import { SafeAreaView } from 'react-native';
 
 /**
  * Screens in main stack navigator.
@@ -44,7 +45,8 @@ stack.Navigator.defaultProps = {
 export default function App() {
   return (
     <>
-      <StatusBar style="auto" />
+      <SafeAreaView style={{ flex: 0, backgroundColor: "rgb(121, 12, 172)" }} />
+      <StatusBar style="light" />
       <CarsProvider>
         <LocationsProvider>
           <Navigation />
