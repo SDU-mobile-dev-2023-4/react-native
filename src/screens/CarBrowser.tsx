@@ -10,7 +10,11 @@ import { AppStackList } from "./App";
 import { Car } from "../utils/types/Car";
 
 type CarBrowserProps = NativeStackScreenProps<AppStackList, 'CarBrowser'>;
-
+/**
+ * @see NativeStackScreenProps from @react-navigation/native-stack
+ * @param props don't worry about the props, it is only used through the navigation system. 
+ * @returns a full page component for the car browser page 
+ */
 export function CarBrowser(props: CarBrowserProps) {
   const { state } = useContext(CarsContext);
   const location = props.route.params.location;
