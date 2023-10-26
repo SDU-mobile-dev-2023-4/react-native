@@ -12,3 +12,10 @@ export const OutlineWhiteButtonStyle = {
     width: '80%',
     height: 'auto',
 }
+
+export const RedButtonStyle = {
+    backgroundColor: '#EA4646',
+    borderRadius: 20,
+    paddingVertical: 10,
+    paddingHorizontal: 80,
+}
