@@ -51,6 +51,7 @@ const styles = StyleSheet.create({
         borderRadius: borderRadius,
         marginTop: verticalSpacing, // Add top margin for vertical spacing
         marginBottom: verticalSpacing, // Add bottom margin for vertical spacing
+        margin : 10,
     },
     image: {
         width: '100%',
