@@ -10,6 +10,7 @@ import { AppStackList } from "./App";
 import { Car } from "../utils/types/Car";
 
 type CarBrowserProps = NativeStackScreenProps<AppStackList, 'CarBrowser'>;
+
 /**
  * @see NativeStackScreenProps from @react-navigation/native-stack
  * @param props don't worry about the props, it is only used through the navigation system.
@@ -33,7 +34,9 @@ export function CarBrowser(props: CarBrowserProps) {
 			{/* Header Section */}
 			<View style={styles.header}>
 				<Text style={styles.headerText}>Car Rental App</Text>
-				<TouchableOpacity style={styles.filterButton} onPress={() => { props.navigation.push('Filters', {}) }}>
+				<TouchableOpacity style={styles.filterButton} onPress={() => { 
+                    props.navigation.push('Filters', {filters: []}) 
+                    }}>
 					{/* Filter Icon from vector lib */}
 					<Ionicons name="filter" size={24} color="white" />
 				</TouchableOpacity>
