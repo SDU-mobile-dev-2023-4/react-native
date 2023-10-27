@@ -33,7 +33,7 @@ export function CarBrowser(props: CarBrowserProps) {
 			{/* Header Section */}
 			<View style={styles.header}>
 				<Text style={styles.headerText}>Car Rental App</Text>
-				<TouchableOpacity style={styles.filterButton}>
+				<TouchableOpacity style={styles.filterButton} onPress={() => { props.navigation.push('Filters', {}) }}>
 					{/* Filter Icon from vector lib */}
 					<Ionicons name="filter" size={24} color="white" />
 				</TouchableOpacity>
