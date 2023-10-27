@@ -61,7 +61,7 @@ function listCars(props: CarBrowserProps, carsFound: Array<Car>) {
                     carName={car.name}
                     carType={car.type}
                     imageLocation={require("../../assets/carpic.png")}
-                    onPress={() => {props.navigation.navigate('CarDetails', {carId: car.id})}}
+                    onPress={() => {props.navigation.push('CarDetails', {carId: car.id})}}
                 />
             ))}
         </ScrollView>

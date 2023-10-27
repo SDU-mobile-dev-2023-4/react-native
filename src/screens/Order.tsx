@@ -43,7 +43,7 @@ export default function Order(props: OrderProps) {
         <>
             <CarDetailsLayout car={car} navigation={props.navigation} button={
                 <Button
-                    onPress={() => props.navigation.goBack()}
+                    onPress={() => props.navigation.pop()}
                 >
                     <H1 color="light" bold>Order car</H1>
                     <View style={{ marginTop: 2 }}>
@@ -61,6 +61,6 @@ export default function Order(props: OrderProps) {
  */
 function errorPage(props: OrderProps) {
     return (
-        <NotFound goBack={() => props.navigation.goBack()} />
+        <NotFound goBack={() => props.navigation.pop()} />
     );
 }
