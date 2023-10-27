@@ -123,6 +123,12 @@ export default function CarDetails(props: CarDetailsProps) {
     );
 }
 
+/**
+ * Metrics component to show the metrics of the car.
+ * 
+ * @param props
+ * @returns Metrics component
+ */
 function Metrics(props: {
     car: Car;
 }) {
