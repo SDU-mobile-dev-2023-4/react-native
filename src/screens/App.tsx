@@ -11,6 +11,7 @@ import { useFonts, Inter_200ExtraLight, Inter_300Light, Inter_400Regular, Inter_
 import CarDetails from './CarDetails';
 import Error from './Error';
 import { SafeAreaView } from 'react-native';
+import Order from './Order';
 
 /**
  * Screens in main stack navigator.
@@ -23,6 +24,7 @@ export type AppStackList = {
   Home: undefined;
   CarBrowser: { location: number | null };
   CarDetails: { carId: number };
+  Order: { carId: number };
 };
 
 /**
@@ -101,6 +103,7 @@ function Navigation() {
         <stack.Screen name="Home" component={Home} />
         <stack.Screen name="CarBrowser" component={CarBrowser} initialParams={{ location: null }} />
         <stack.Screen name="CarDetails" component={CarDetails} initialParams={{ carId: 0 }} />
+        <stack.Screen name="Order" component={Order} initialParams={{ carId: 0 }} />
       </stack.Navigator>
     </NavigationContainer>
   );
