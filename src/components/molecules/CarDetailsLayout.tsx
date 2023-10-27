@@ -83,7 +83,7 @@ export default function CarDetailsLayout(props: CarDetailsLayoutProps) {
                 top: 0,
                 left: 0,
             }}>
-                <Pressable onPress={() => props.navigation.goBack()}>
+                <Pressable onPress={() => props.navigation.pop()}>
                     <Image source={require('../../../assets/right-arrow.png')} style={{ width: 30, height: 30, marginLeft: 15, marginTop: 15, transform: [{ rotate: "180deg" }] }} />
                 </Pressable>
             </View>
