@@ -12,41 +12,40 @@ import { Car } from "../utils/types/Car";
 type CarBrowserProps = NativeStackScreenProps<AppStackList, 'CarBrowser'>;
 /**
  * @see NativeStackScreenProps from @react-navigation/native-stack
- * @param props don't worry about the props, it is only used through the navigation system. 
- * @returns a full page component for the car browser page 
+ * @param props don't worry about the props, it is only used through the navigation system.
+ * @returns a full page component for the car browser page
  */
 export function CarBrowser(props: CarBrowserProps) {
-  const { state } = useContext(CarsContext);
-  const location = props.route.params.location;
-  if (!location) {
-    return (
-      <View style={styles.container}>
-        <DefaultGradient />
-        <Text style={styles.headerText}>No location selected</Text>
-      </View>
-    );
-  }
-  const carsFound = state.cars.filter((car) => car.location.id === location);
-  return (
-    <View style={styles.container}>
-      <DefaultGradient />
-       {/* Header Section */}
-      <View style={styles.header}>
-        <Text style={styles.headerText}>Car Rental App</Text>
-        <TouchableOpacity style={styles.filterButton}>
-            {/* Filter Icon from vector lib */}
-            <Ionicons name="filter" size={24} color="white" />
-        </TouchableOpacity>
-      </View>
-      {listCars(carsFound)}
-        {/* Line below header */}
-            
-      <StatusBar style="auto" />
-    </View>
-  );
+	const { state } = useContext(CarsContext);
+	const location = props.route.params.location;
+	if (!location) {
+		return (
+		<View style={styles.container}>
+			<DefaultGradient />
+			<Text style={styles.headerText}>No location selected</Text>
+		</View>
+		);
+	}
+	const carsFound = state.cars.filter((car) => car.location.id === location);
+	return (
+		<View style={styles.container}>
+			<DefaultGradient />
+			{/* Header Section */}
+			<View style={styles.header}>
+				<Text style={styles.headerText}>Car Rental App</Text>
+				<TouchableOpacity style={styles.filterButton}>
+					{/* Filter Icon from vector lib */}
+					<Ionicons name="filter" size={24} color="white" />
+				</TouchableOpacity>
+			</View>
+			{listCars(props, carsFound)}
+			{/* Line below header */}
+			<StatusBar style="auto" />
+		</View>
+	);
 }
 
-function listCars(carsFound: Array<Car>) {
+function listCars(props: CarBrowserProps, carsFound: Array<Car>) {
     if (carsFound.length === 0) {
         return (
             <View style={styles.justifyCenter}>
@@ -62,6 +61,7 @@ function listCars(carsFound: Array<Car>) {
                     carName={car.name}
                     carType={car.type}
                     imageLocation={require("../../assets/carpic.png")}
+                    onPress={() => {props.navigation.navigate('CarDetails', {carId: car.id})}}
                 />
             ))}
         </ScrollView>
