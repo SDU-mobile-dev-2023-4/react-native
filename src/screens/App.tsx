@@ -23,6 +23,7 @@ export type AppStackList = {
   Home: undefined;
   CarBrowser: { location: number | null };
   CarDetails: { carId: number };
+  Order: { carId: number };
 };
 
 /**
