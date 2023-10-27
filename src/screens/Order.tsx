@@ -7,6 +7,7 @@ import NotFound from "../components/molecules/NotFound";
 import { H1 } from "../components/atoms/Text/H1";
 import Button from "../components/atoms/Button";
 import CarDetailsLayout from "../components/molecules/CarDetailsLayout";
+import { AntDesign } from '@expo/vector-icons';
 
 type OrderProps = NativeStackScreenProps<AppStackList, 'Order'>;
 
@@ -46,7 +47,7 @@ export default function Order(props: OrderProps) {
                 >
                     <H1 color="light" bold>Order car</H1>
                     <View style={{ marginTop: 2 }}>
-                        <Image source={require('../../assets/right-arrow.png')} style={{ width: 26, height: 26, marginLeft: 10 }} />
+                        <AntDesign name="shoppingcart" size={25} color="white" style={{ marginLeft: 10 }} />
                     </View>
                 </Button>
             }>

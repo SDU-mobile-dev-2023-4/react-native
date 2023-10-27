@@ -44,7 +44,7 @@ export default function CarDetails(props: CarDetailsProps) {
         <>
             <CarDetailsLayout car={car} navigation={props.navigation} button={
                 <Button
-                    onPress={() => props.navigation.goBack()}
+                    onPress={() => props.navigation.navigate('Order', { carId: car.id })}
                 >
                     <H1 color="light" bold>Order car</H1>
                     <View style={{ marginTop: 2 }}>
