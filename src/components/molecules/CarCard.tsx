@@ -1,5 +1,5 @@
 import React from "react";
-import { StyleSheet, View, Text, Image } from "react-native";
+import { StyleSheet, View, Text, Image, Pressable } from "react-native";
 import { LinearGradient } from 'expo-linear-gradient';
 
 // Define the CarCard component to accept carName, carType, and imageLocation as props
@@ -7,6 +7,7 @@ type CarCardProps = {
     carName: string;
     carType: string;
     imageLocation: any;
+    onPress: () => void;
 };
 
 /*
@@ -16,22 +17,24 @@ type CarCardProps = {
 * @param imageLocation - The location of the image, remember require(/path/to/image)
 * @returns {JSX.Element} - A car card component
 */
-export const CarCard = ({ carName, carType, imageLocation }: CarCardProps) => {
+export const CarCard = ({ carName, carType, imageLocation, onPress }: CarCardProps) => {
     return (
-        <View style={styles.imageContainer}>
-            {/* Use the passed imageLocation prop for the Image source */}
-            <Image source={imageLocation} style={styles.image} />
-            <LinearGradient
-                colors={['transparent', 'white', 'white']}
-                locations={[0, 0.3, 1]}
-                style={styles.gradient}
-                start={{ x: 0, y: 0 }}
-                end={{ x: 0, y: 0.5 }}
-            />
-            {/* Use the passed carName and carType props for the Text components */}
-            <Text style={styles.carName}>{carName}</Text>
-            <Text style={styles.carType}>{carType}</Text>
-        </View>
+        <Pressable onPress={onPress}>
+            <View style={styles.imageContainer}>
+                {/* Use the passed imageLocation prop for the Image source */}
+                <Image source={imageLocation} style={styles.image} />
+                <LinearGradient
+                    colors={['transparent', 'white', 'white']}
+                    locations={[0, 0.3, 1]}
+                    style={styles.gradient}
+                    start={{ x: 0, y: 0 }}
+                    end={{ x: 0, y: 0.5 }}
+                />
+                {/* Use the passed carName and carType props for the Text components */}
+                <Text style={styles.carName}>{carName}</Text>
+                <Text style={styles.carType}>{carType}</Text>
+            </View>
+        </Pressable>
     );
 }
 
