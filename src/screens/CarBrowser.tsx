@@ -114,17 +114,15 @@ const styles = StyleSheet.create({
     },
     filterButton: {
         padding: 10,
-
     },
     cardGridContent: {
-        flexDirection: 'row', // Arrange the cards in rows
-        flexWrap: 'wrap', // Create a grid layout
-        justifyContent: 'space-between', // Space out the cards evenly
-        gap: 40, // Add some spacing between the cards
+        flexDirection: 'row',
+        flexWrap: 'wrap',
+        justifyContent: 'space-around',
     },
     cardGrid: {
-        flex: 1, // Take up all screen space
-        padding: 16, // Add padding to space out the cards
+        flex: 1,
+        padding: 10
     },
     cardRow: {
         flexDirection: 'row', // Arrange the cards in rows
