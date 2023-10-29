@@ -1,16 +1,22 @@
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import React, { useContext, useState } from "react";
-import { Image, View, Button as ReactButton, Pressable } from "react-native";
+import { View, Button as ReactButton, Pressable } from "react-native";
 import { AppStackList } from "./App";
 import { CarsContext } from "../components/molecules/CarsContext";
 import NotFound from "../components/molecules/NotFound";
 import { H1 } from "../components/atoms/Text/H1";
 import Button from "../components/atoms/Button";
 import CarDetailsLayout from "../components/molecules/CarDetailsLayout";
-import { AntDesign } from '@expo/vector-icons';
+import { AntDesign, Entypo } from '@expo/vector-icons';
 import { Text } from "../components/atoms/Text/Text";
 import DateTimePickerModal from "react-native-modal-datetime-picker";
 import { OutlineButtonStyle, OutlineWhiteButtonStyle } from "../utils/styles/ButtonStyle";
+import { Car } from "../utils/types/Car";
+import { LocationSelect } from "../components/molecules/LocationSelect";
+import { Location } from "../utils/types/Location";
+import { H3TextStyle } from "../utils/styles/generalTextStyle";
+import { H3 } from "../components/atoms/Text/H3";
+import { H2 } from "../components/atoms/Text/H2";
 
 type OrderProps = NativeStackScreenProps<AppStackList, 'Order'>;
 
@@ -54,7 +60,7 @@ export default function Order(props: OrderProps) {
                     </View>
                 </Button>
             }>
-                <OrderDetails />
+                <OrderDetails car={car} />
             </CarDetailsLayout>
         </>
     );
@@ -67,12 +73,15 @@ export default function Order(props: OrderProps) {
  * 
  * @returns A component for the order details section
  */
-function OrderDetails() {
+function OrderDetails(props: { car: Car }) {
     // Pick-up date is defaulted to today
     const [pickUpDate, setPickUpDate] = useState(new Date());
+    // Pick up location is defaulted to the car location
+    const [pickUpLocation, setPickUpLocation] = React.useState<Location | null>(props.car.location);
     // Dropoff date is defaulted to 1 day after pickup date
     const [dropOffDate, setDropOffDate] = useState(new Date(pickUpDate.getTime() + 86400000));
-
+    // Drop off location is defaulted to the car location
+    const [dropOffLocation, setDropOffLocation] = React.useState<Location | null>(props.car.location);
     return (
         <View style={{
             display: 'flex',
@@ -85,27 +94,54 @@ function OrderDetails() {
             <View style={{
                 alignItems: 'flex-end',
             }}>
-                <Text style={{ marginVertical: verticalSpacing }}>Pick-up</Text>
+                <H2 style={{ marginVertical: verticalSpacing }}>Pick-up</H2>
                 <DateTimePicker date={pickUpDate} setDate={setPickUpDate} />
+                <View style={{ marginVertical: verticalSpacing }}>
+                    <LocationSelect
+                        location={pickUpLocation}
+                        setLocation={setPickUpLocation}
+                        buttonText={pickUpLocation?.name ?? "Select"}
+                        buttonStyle={{ ...(OutlineButtonStyle as object), borderColor: mainColor, padding: 0, margin: 0, height: 38, width: "auto" }}
+                        buttonTextStyle={{ color: mainColor }}
+                        rowStyle={{
+                            paddingVertical: 10,
+                        }}
+                    />
+                </View>
             </View>
             {/* Icons */}
             <View style={{
                 marginHorizontal: 10,
                 alignItems: 'center',
             }}>
-                <Text style={{ marginVertical: verticalSpacing }}>-</Text>
-                <View style={{ marginVertical: verticalSpacing * 1.75 }}>
+                <H2 style={{ marginVertical: verticalSpacing }}>-</H2>
+                <View style={{ marginVertical: verticalSpacing * 1.5 }}>
                     <AntDesign name="clockcircleo" size={24} color={mainColor} />
+                </View>
+                <View style={{ marginVertical: verticalSpacing * 1.25 }}>
+                    <Entypo name="location-pin" size={30} color={mainColor} />
                 </View>
             </View>
             {/* Drop-off */}
             <View style={{
                 alignItems: 'flex-start',
             }}>
-                <Text style={{ marginVertical: verticalSpacing }}>Drop-off</Text>
+                <H2 style={{ marginVertical: verticalSpacing }}>Drop-off</H2>
                 <DateTimePicker date={dropOffDate} setDate={setDropOffDate} />
+                <View style={{ marginVertical: verticalSpacing }}>
+                    <LocationSelect
+                        location={dropOffLocation}
+                        setLocation={setDropOffLocation}
+                        buttonText={dropOffLocation?.name ?? "Select"}
+                        buttonStyle={{ ...(OutlineButtonStyle as object), borderColor: mainColor, padding: 0, margin: 0, height: 38, width: "auto" }}
+                        buttonTextStyle={{ color: mainColor }}
+                        rowStyle={{
+                            paddingVertical: 10,
+                        }}
+                    />
+                </View>
             </View>
-        </View>
+        </View >
     )
 }
 
@@ -190,4 +226,4 @@ const mainColor = "#666666";
 /**
  * Spacing between elements vertically
  */
-const verticalSpacing = 10;
+const verticalSpacing = 15;
