@@ -68,8 +68,10 @@ export default function Order(props: OrderProps) {
  * @returns A component for the order details section
  */
 function OrderDetails() {
+    // Pick-up date is defaulted to today
     const [pickUpDate, setPickUpDate] = useState(new Date());
-    const [dropOffDate, setDropOffDate] = useState(new Date());
+    // Dropoff date is defaulted to 1 day after pickup date
+    const [dropOffDate, setDropOffDate] = useState(new Date(pickUpDate.getTime() + 86400000));
 
     return (
         <View style={{
