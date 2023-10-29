@@ -1,13 +1,12 @@
 import { H2TextStyle, whiteTextStyle } from "../../../utils/styles/generalTextStyle";
-import { Text } from "./Text";
+import { Text, TextProps as RawTextProps } from "./Text";
 
 /**
  * Props for the H2 component. Allows for further customization through styling and choosing text color.
  */
-export type TextProps = {
+export type TextProps = RawTextProps & {
     children: string;
     style?: any;
-    color?: "light" | "dark";
 }
 
 /**

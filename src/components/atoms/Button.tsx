@@ -1,5 +1,5 @@
 import React from "react";
-import { Pressable, View } from "react-native";
+import { Pressable, StyleProp, View, ViewStyle } from "react-native";
 import { RedButtonStyle } from "../../utils/styles/ButtonStyle";
 import { Text } from "./Text/Text";
 
@@ -17,6 +17,7 @@ export type ButtonProps = {
     children?: React.ReactNode;
     color?: "red" | "blue";
     text?: string;
+    style?: StyleProp<ViewStyle>;
 }
 
 /**
@@ -27,7 +28,7 @@ export type ButtonProps = {
  * @see ButtonProps
  */
 export default function Button(props: ButtonProps) {
-    let extraStyling = {};
+    let extraStyling = props.style ?? {};
 
     if (props.color === "blue") {
         extraStyling = {
@@ -37,7 +38,7 @@ export default function Button(props: ButtonProps) {
 
     return (
         <Pressable
-            style={{ ...RedButtonStyle, ...extraStyling }}
+            style={{ ...RedButtonStyle, ...(extraStyling as object) }}
             onPress={props.onPress}
         >
             {/* <!-- Begin a container for the button's content which includes text and an image --> */}
