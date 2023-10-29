@@ -1,6 +1,6 @@
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
-import React, { useContext } from "react";
-import { Image, View } from "react-native";
+import React, { useContext, useState } from "react";
+import { Image, View, Button as ReactButton, Pressable } from "react-native";
 import { AppStackList } from "./App";
 import { CarsContext } from "../components/molecules/CarsContext";
 import NotFound from "../components/molecules/NotFound";
@@ -8,6 +8,9 @@ import { H1 } from "../components/atoms/Text/H1";
 import Button from "../components/atoms/Button";
 import CarDetailsLayout from "../components/molecules/CarDetailsLayout";
 import { AntDesign } from '@expo/vector-icons';
+import { Text } from "../components/atoms/Text/Text";
+import DateTimePickerModal from "react-native-modal-datetime-picker";
+import { OutlineButtonStyle, OutlineWhiteButtonStyle } from "../utils/styles/ButtonStyle";
 
 type OrderProps = NativeStackScreenProps<AppStackList, 'Order'>;
 
@@ -51,8 +54,119 @@ export default function Order(props: OrderProps) {
                     </View>
                 </Button>
             }>
+                <OrderDetails />
             </CarDetailsLayout>
         </>
+    );
+}
+
+/**
+ * Render the order details section.
+ * 
+ * This includes handling the state of the order details.
+ * 
+ * @returns A component for the order details section
+ */
+function OrderDetails() {
+    const [pickUpDate, setPickUpDate] = useState(new Date());
+    const [dropOffDate, setDropOffDate] = useState(new Date());
+
+    return (
+        <View style={{
+            display: 'flex',
+            alignItems: 'flex-start',
+            justifyContent: 'center',
+            flexDirection: 'row',
+            width: "100%",
+        }}>
+            {/* Pick-up */}
+            <View style={{
+                alignItems: 'flex-end',
+            }}>
+                <Text style={{ marginVertical: verticalSpacing }}>Pick-up</Text>
+                <DateTimePicker date={pickUpDate} setDate={setPickUpDate} />
+            </View>
+            {/* Icons */}
+            <View style={{
+                marginHorizontal: 10,
+            }}>
+                <Text style={{ marginVertical: verticalSpacing }}>-</Text>
+                <View style={{ marginVertical: verticalSpacing * 1.75 }}>
+                    <AntDesign name="clockcircleo" size={24} color={mainColor} />
+                </View>
+            </View>
+            {/* Drop-off */}
+            <View style={{
+                alignItems: 'flex-start',
+            }}>
+                <Text style={{ marginVertical: verticalSpacing }}>Drop-off</Text>
+                <DateTimePicker date={dropOffDate} setDate={setDropOffDate} />
+            </View>
+        </View>
+    )
+}
+
+/**
+ * Render a date time picker
+ * 
+ * @param props The properties for the date time picker, including a date and a function to set the date
+ * @returns A date time picker component
+ */
+function DateTimePicker(props: {
+    date: Date,
+    setDate: (date: Date) => void,
+}) {
+    const { date, setDate } = props;
+
+    // Date picker state, for showing and hiding the date picker
+    const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
+
+    /**
+     * Show the date picker when the button is pressed.
+     */
+    const showDatePicker = () => {
+        setDatePickerVisibility(true);
+    };
+
+    /**
+     * Hide the date picker when the date is picked.
+     */
+    const hideDatePicker = () => {
+        setDatePickerVisibility(false);
+    };
+
+    /**
+     * Handle the date being picked.
+     * 
+     * @param date The date that was picked
+     */
+    const handleConfirm = (date: Date) => {
+        console.warn("A date has been picked: ", date);
+        setDate(date);
+        hideDatePicker();
+    };
+
+    // Render the date time picker
+    return (
+        <View style={{ marginVertical: verticalSpacing }}>
+            {/* Button to show the date time picker */}
+            <Pressable style={{ ...(OutlineButtonStyle as object), borderColor: mainColor }} >
+                <ReactButton
+                    // Custom datetime format
+                    title={date.getFullYear() + "/" + date.getMonth() + "/" + date.getDate() + " " + date.getHours() + ":" + date.getMinutes()}
+                    onPress={showDatePicker}
+                    color={mainColor}
+                />
+            </Pressable>
+            {/* The date time picker, which triggers the native date time picker */}
+            <DateTimePickerModal
+                isVisible={isDatePickerVisible}
+                mode="date"
+                date={date}
+                onConfirm={handleConfirm}
+                onCancel={hideDatePicker}
+            />
+        </View>
     );
 }
 
@@ -64,3 +178,13 @@ function errorPage(props: OrderProps) {
         <NotFound goBack={() => props.navigation.pop()} />
     );
 }
+
+/**
+ * Main color of order page elements
+ */
+const mainColor = "#666666";
+
+/**
+ * Spacing between elements vertically
+ */
+const verticalSpacing = 10;
