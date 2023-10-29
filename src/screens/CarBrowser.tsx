@@ -60,7 +60,7 @@ function listCars(props: CarBrowserProps, carsFound: Array<Car>) {
                     key={car.id}
                     carName={car.name}
                     carType={car.type}
-                    imageLocation={require("../../assets/carpic.png")}
+                    imageLocation={{ uri: car.pictures[0].srcUrl }}
                     onPress={() => {props.navigation.push('CarDetails', {carId: car.id})}}
                 />
             ))}
