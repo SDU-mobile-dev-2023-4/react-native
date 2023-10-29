@@ -89,6 +89,7 @@ function OrderDetails() {
             {/* Icons */}
             <View style={{
                 marginHorizontal: 10,
+                alignItems: 'center',
             }}>
                 <Text style={{ marginVertical: verticalSpacing }}>-</Text>
                 <View style={{ marginVertical: verticalSpacing * 1.75 }}>
