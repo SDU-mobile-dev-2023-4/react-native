@@ -52,7 +52,11 @@ export default function Order(props: OrderProps) {
         <>
             <CarDetailsLayout car={car} navigation={props.navigation} button={
                 <Button
-                    onPress={() => props.navigation.pop()}
+                    onPress={() => {
+                        props.navigation.popToTop();
+                        props.navigation.push("CarBrowser", { location: car.location.id });
+                        props.navigation.navigate("OrderConfirmation", { carId: car.id })
+                    }}
                 >
                     <H1 color="light" bold>Order car</H1>
                     <View style={{ marginTop: 2 }}>

@@ -13,6 +13,7 @@ import Error from './Error';
 import { SafeAreaView } from 'react-native';
 import { Filters } from './Filters';
 import Order from './Order';
+import OrderConfirmation from './OrderConfirmation';
 
 /**
  * Screens in main stack navigator.
@@ -33,6 +34,7 @@ export type AppStackList = {
   CarDetails: { carId: number };
   Filters: {filters: FilterType[]};
   Order: { carId: number };
+  OrderConfirmation: { carId: number };
 };
 
 /**
@@ -113,6 +115,7 @@ function Navigation() {
         <stack.Screen name="CarDetails" component={CarDetails} initialParams={{ carId: 0 }} />
         <stack.Screen name="Filters" component={Filters} />
         <stack.Screen name="Order" component={Order} initialParams={{ carId: 0 }} />
+        <stack.Screen name="OrderConfirmation" component={OrderConfirmation} initialParams={{ carId: 0 }} />
       </stack.Navigator>
     </NavigationContainer>
   );
