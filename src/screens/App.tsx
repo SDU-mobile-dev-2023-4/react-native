@@ -21,11 +21,17 @@ import Order from './Order';
  * 
  * @see https://reactnavigation.org/docs/typescript
  */
+
+export type FilterType = {
+  group: string;
+  filters: string[];
+};
+
 export type AppStackList = {
   Home: undefined;
   CarBrowser: { location: number | null };
   CarDetails: { carId: number };
-  Filters: {};
+  Filters: {filters: FilterType[]};
   Order: { carId: number };
 };
 
