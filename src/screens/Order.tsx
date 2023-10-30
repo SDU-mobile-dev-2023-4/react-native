@@ -184,7 +184,6 @@ function DateTimePicker(props: {
      * @param date The date that was picked
      */
     const handleConfirm = (date: Date) => {
-        console.warn("A date has been picked: ", date);
         setDate(date);
         hideDatePicker();
     };
@@ -196,7 +195,7 @@ function DateTimePicker(props: {
             <Pressable style={{ ...(OutlineButtonStyle as object), borderColor: mainColor }} >
                 <ReactButton
                     // Custom datetime format
-                    title={date.getFullYear() + "/" + date.getMonth() + "/" + date.getDate() + " " + date.getHours() + ":" + date.getMinutes()}
+                    title={date.getFullYear() + "/" + date.getMonth() + "/" + date.getDate() + " 12:00"}
                     onPress={showDatePicker}
                     color={mainColor}
                 />

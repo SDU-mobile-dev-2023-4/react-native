@@ -1,4 +1,4 @@
-import React, {useContext} from "react";
+import React, { useContext } from "react";
 import { StatusBar } from 'expo-status-bar';
 import { CarCard } from "../components/molecules/CarCard";
 import { View, StyleSheet, Text, TouchableOpacity, ScrollView } from "react-native";
@@ -8,6 +8,7 @@ import { CarsContext } from "../components/molecules/CarsContext";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { AppStackList } from "./App";
 import { Car } from "../utils/types/Car";
+import NotFound from "../components/molecules/NotFound";
 
 type CarBrowserProps = NativeStackScreenProps<AppStackList, 'CarBrowser'>;
 
@@ -17,45 +18,49 @@ type CarBrowserProps = NativeStackScreenProps<AppStackList, 'CarBrowser'>;
  * @returns a full page component for the car browser page
  */
 export function CarBrowser(props: CarBrowserProps) {
-	const { state } = useContext(CarsContext);
-	const location = props.route.params.location;
-	if (!location) {
-		return (
-		<View style={styles.container}>
-			<DefaultGradient />
-			<Text style={styles.headerText}>No location selected</Text>
-		</View>
-		);
-	}
-	const carsFound = state.cars.filter((car) => car.location.id === location);
-	return (
-		<View style={styles.container}>
-			<DefaultGradient />
-			{/* Header Section */}
-			<View style={styles.header}>
-				<Text style={styles.headerText}>Car Rental App</Text>
-				<TouchableOpacity style={styles.filterButton} onPress={() => { 
-                    props.navigation.push('Filters', {filters: []}) 
-                    }}>
-					{/* Filter Icon from vector lib */}
-					<Ionicons name="filter" size={24} color="white" />
-				</TouchableOpacity>
-			</View>
-			{listCars(props, carsFound)}
-			{/* Line below header */}
-			<StatusBar style="auto" />
-		</View>
-	);
+    const { state } = useContext(CarsContext);
+    const location = props.route.params.location;
+    if (!location) {
+        return (
+            <>
+                <DefaultGradient />
+                <NotFound goBack={() => props.navigation.pop()} text={"No location selected"} light />
+            </>
+        );
+    }
+
+    const carsFound = state.cars.filter((car) => car.location.id === location);
+    if (carsFound.length === 0) {
+        return (
+            <>
+                <DefaultGradient />
+                <NotFound goBack={() => props.navigation.pop()} text={"No cars found"} light />
+            </>
+        );
+    }
+
+    return (
+        <View style={styles.container}>
+            <DefaultGradient />
+            {/* Header Section */}
+            <View style={styles.header}>
+                <Text style={styles.headerText}>Car Rental App</Text>
+                <TouchableOpacity style={styles.filterButton} onPress={() => {
+                    props.navigation.push('Filters', { filters: [] })
+                }}>
+                    {/* Filter Icon from vector lib */}
+                    <Ionicons name="filter" size={24} color="white" />
+                </TouchableOpacity>
+            </View>
+            {listCars(props, carsFound)}
+            {/* Line below header */}
+            <StatusBar style="auto" />
+        </View>
+    );
 }
 
 function listCars(props: CarBrowserProps, carsFound: Array<Car>) {
-    if (carsFound.length === 0) {
-        return (
-            <View style={styles.justifyCenter}>
-                <Text style={styles.headerText}>No cars found</Text>
-            </View>
-        );
-    }
+
     return (
         <ScrollView style={styles.cardGrid} contentContainerStyle={styles.cardGridContent}>
             {carsFound.map((car) => (
@@ -64,12 +69,13 @@ function listCars(props: CarBrowserProps, carsFound: Array<Car>) {
                     carName={car.name}
                     carType={car.type}
                     imageLocation={{ uri: car.pictures[0].srcUrl }}
-                    onPress={() => {props.navigation.push('CarDetails', {carId: car.id})}}
+                    onPress={() => { props.navigation.push('CarDetails', { carId: car.id }) }}
                 />
             ))}
         </ScrollView>
     );
 }
+
 const styles = StyleSheet.create({
     justifyCenter: {
         justifyContent: 'center',
@@ -125,7 +131,7 @@ const styles = StyleSheet.create({
     },
     cardGrid: {
         flex: 1,
-        padding: 10
+        padding: 8
     },
     cardRow: {
         flexDirection: 'row', // Arrange the cards in rows
@@ -135,5 +141,5 @@ const styles = StyleSheet.create({
         height: 2,
         backgroundColor: 'white', // Small white line below the header, still NOT working
     },
-    }
+}
 );
