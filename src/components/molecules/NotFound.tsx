@@ -12,6 +12,10 @@ import Button from "../atoms/Button";
  */
 type NotFoundProps = {
     goBack: () => void;
+    /** Optional error text to display - defaults to "Not found" */
+    text?: string;
+    /** Light or dark mode */
+    light?: boolean;
 }
 
 /**
@@ -32,7 +36,9 @@ export default function NotFound(props: NotFoundProps) {
                 alignItems: 'center',
                 justifyContent: 'center',
             }}>
-                <H1 style={{ marginBottom: 20 }}>Not found</H1>
+                <H1 style={{ marginBottom: 20 }} color={props.light ? "light" : "dark"}>
+                    {props.text ?? "Not found"}
+                </H1>
                 <Button
                     onPress={props.goBack}
                     color="blue"

@@ -24,7 +24,7 @@ const StorageDataSchema = z.object({
 export const storeData = async (key: string, value: unknown, time: number = 10): Promise<void> => {
     try {
         // Purge expired states
-        purgeData(key);
+        await purgeData(key);
 
         // Format time as milliseconds
         time = time * 60 * 1000;
