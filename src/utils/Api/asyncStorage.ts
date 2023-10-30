@@ -54,7 +54,7 @@ export const storeData = async (key: string, value: unknown, time: number = 10):
 export const getData = async (key: string): Promise<StorageData | false> => {
     try {
         // Purge expired states
-        purgeData(key);
+        await purgeData(key);
 
         // Get the item
         const jsonValue = await AsyncStorage.getItem(key);
