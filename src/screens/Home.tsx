@@ -10,6 +10,7 @@ import { H1TextStyle, whiteTextStyle } from "../utils/styles/generalTextStyle";
 import { Text } from "../components/atoms/Text/Text";
 import { OutlineWhiteButtonStyle } from "../utils/styles/ButtonStyle";
 import Button from "../components/atoms/Button";
+import { LocationSelect } from "../components/molecules/LocationSelect";
 
 type HomeProps = NativeStackScreenProps<AppStackList, 'Home'>;
 
@@ -44,9 +45,9 @@ export default function Home(props: HomeProps) {
  * It uses the SelectDropdown by react-native-select-dropdown.  
  * This component is only used on the `Home` screen and is therefore not exported.
  * 
- * @param porps - The properties passed to the component
+ * @param props - The properties passed to the component
  */
-function SelectButton(porps: {
+function SelectButton(props: {
     choosenLocation: Location | null;
     setChoosenLocation: React.Dispatch<React.SetStateAction<Location | null>>;
 }) {
@@ -54,29 +55,17 @@ function SelectButton(porps: {
     const locationsContext = useContext(LocationsContext);
 
     return (
-        // Use the SelectDropdown component
-        <SelectDropdown
-            defaultButtonText="Select a location"
-            data={locationsContext.state.locations}
-            onSelect={(selectedItem) => {
-                porps.setChoosenLocation(selectedItem); // Update the state of the choosen location through the setter
-            }}
-
-            // Styling for the component
-            buttonTextAfterSelection={(selectedItem) => selectedItem.name}
-            rowTextForSelection={(item) => item.name}
+        <LocationSelect
+            location={props.choosenLocation}
+            setLocation={props.setChoosenLocation}
+            buttonText="Select a location"
             buttonStyle={OutlineWhiteButtonStyle as object}
             buttonTextStyle={{ ...H1TextStyle, ...whiteTextStyle }}
-            dropdownStyle={{
-                borderWidth: 2,
-                borderRadius: 15,
-                height: "auto", // Ensure that the dropdown is as high as it needs to be
-            }}
             rowStyle={{
                 paddingVertical: 10,
             }}
         />
-    );
+    )
 }
 
 /**
